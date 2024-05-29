@@ -7,7 +7,7 @@
   >
     <div
       v-for="item in total"
-      class="bg-[#161616] rounded text-white flex justify-center items-center hover:border-2 hover:border-[#00d67d] text-9xl border-2 border-[#161616]"
+      class="bg-[#161616] rounded text-white flex justify-center items-center hover:border-2 hover:border-[#00d67d] text-9xl border-2 border-[#161616] cursor-pointer select-none"
     >
       {{ item }}
     </div>
