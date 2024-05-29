@@ -18,13 +18,14 @@
         icon="i-heroicons-chevron-left"
       />
       <UButton
-        :disabled="colCount === 1"
+        :disabled="total === 1"
         color="black"
         :ui="{ rounded: 'rounded-full' }"
         icon="i-heroicons-minus"
         @click="decreCount"
       />
       <UButton
+        :disabled="total === 9"
         :ui="{ rounded: 'rounded-full' }"
         icon="i-heroicons-plus"
         @click="increCount"

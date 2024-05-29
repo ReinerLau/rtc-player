@@ -6,7 +6,9 @@ export const useLayout = (col: number) => {
   const total = computed(() => colCount.value * colCount.value);
 
   const increCount = () => {
-    colCount.value++;
+    if (colCount.value < 3) {
+      colCount.value++;
+    }
   };
 
   const decreCount = () => {
