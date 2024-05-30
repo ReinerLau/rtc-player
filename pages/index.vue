@@ -6,10 +6,15 @@
     }"
   >
     <div
-      v-for="item in total"
-      class="bg-[#161616] rounded text-white flex justify-center items-center hover:border-2 hover:border-[#00d67d] text-9xl border-2 border-[#161616] cursor-pointer select-none"
+      v-for="index in total"
+      class="relative bg-[#161616] rounded text-white flex justify-center items-center hover:border-2 hover:border-[#00d67d] border-2 border-[#161616] cursor-pointer select-none"
     >
-      {{ item }}
+      <div class="absolute top-5 left-5">
+        {{ videoList[index - 1]?.name || "" }}
+      </div>
+      <span class="text-9xl">
+        {{ index }}
+      </span>
     </div>
     <div class="absolute bottom-10 right-10 flex gap-x-2">
       <UButton
@@ -41,20 +46,17 @@
 
 <script lang="ts" setup>
 import { useFetch } from "nuxt/app";
-import { onMounted } from "vue";
+import { ref } from "vue";
 import { useLayout } from "~/composables/useLayout";
+import type { Video } from "../types";
 
 const { colCount, total, increCount, decreCount } = useLayout(1);
 
 const { data } = await useFetch("/api/video");
-console.log(data.value);
 
-onMounted(async () => {
-  const data = await $fetch("/api/video", {
-    method: "GET",
-  });
-  console.log(data);
-});
+const videoList = ref<Video[]>([]);
+
+videoList.value = data.value;
 </script>
 
 <style>
