@@ -17,6 +17,7 @@
     "better-sqlite3": "^10.0.0",
     "drizzle-orm": "^0.30.10",
     "nuxt": "^3.11.2",
+    "primevue": "^3.52.0",
     "vue": "^3.4.27",
     "vue-router": "^4.3.2"
   },
@@ -24,6 +25,7 @@
     "@types/better-sqlite3": "^7.6.10",
     "@vitejs/plugin-vue": "^5.0.4",
     "drizzle-kit": "^0.21.4",
+    "nuxt-primevue": "^3.0.0",
     "vitest": "^1.6.0"
   }
 }
