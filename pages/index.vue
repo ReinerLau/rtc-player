@@ -10,17 +10,19 @@
       class="relative bg-[#161616] rounded text-white flex justify-center items-center hover:border-2 hover:border-[#00d67d] border-2 border-[#161616] cursor-pointer select-none"
     >
       <div class="absolute top-5 left-5">
-        {{ videoList[index - 1]?.name || "" }}
+        {{ videoList[getIndex(total, index) - 1]?.name || "" }}
       </div>
       <span class="text-9xl">
-        {{ index }}
+        {{ getIndex(total, index) }}
       </span>
     </div>
     <div class="absolute bottom-10 right-10 flex gap-x-2">
       <UButton
+        :disabled="page === 1"
         color="black"
         :ui="{ rounded: 'rounded-full' }"
         icon="i-heroicons-chevron-left"
+        @click="backward"
       />
       <UButton
         :disabled="total === 1"
@@ -39,6 +41,7 @@
         color="black"
         :ui="{ rounded: 'rounded-full' }"
         icon="i-heroicons-chevron-right"
+        @click="forward"
       />
     </div>
   </div>
@@ -48,9 +51,12 @@
 import { useFetch } from "nuxt/app";
 import { ref } from "vue";
 import { useLayout } from "~/composables/useLayout";
+import { usePage } from "../composables/usePage";
 import type { Video } from "../types";
 
 const { colCount, total, increCount, decreCount } = useLayout(1);
+
+const { page, forward, backward, getIndex } = usePage();
 
 const { data } = await useFetch("/api/video");
 
