@@ -40,9 +40,21 @@
 </template>
 
 <script lang="ts" setup>
+import { useFetch } from "nuxt/app";
+import { onMounted } from "vue";
 import { useLayout } from "~/composables/useLayout";
 
 const { colCount, total, increCount, decreCount } = useLayout(1);
+
+const { data } = await useFetch("/api/video");
+console.log(data.value);
+
+onMounted(async () => {
+  const data = await $fetch("/api/video", {
+    method: "GET",
+  });
+  console.log(data);
+});
 </script>
 
 <style>
