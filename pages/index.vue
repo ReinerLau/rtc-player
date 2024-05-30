@@ -16,40 +16,18 @@
         {{ getIndex(total, index) }}
       </span>
     </div>
-    <div class="absolute bottom-10 right-10 flex gap-x-2">
-      <UButton
-        :disabled="page === 1"
-        color="black"
-        :ui="{ rounded: 'rounded-full' }"
-        icon="i-heroicons-chevron-left"
-        @click="backward"
-      />
-      <UButton
-        :disabled="total === 1"
-        color="black"
-        :ui="{ rounded: 'rounded-full' }"
-        icon="i-heroicons-minus"
-        @click="decreCount"
-      />
-      <UButton
-        :disabled="total === 9"
-        :ui="{ rounded: 'rounded-full' }"
-        icon="i-heroicons-plus"
-        @click="increCount"
-      />
-      <UButton
-        color="black"
-        :ui="{ rounded: 'rounded-full' }"
-        icon="i-heroicons-chevron-right"
-        @click="forward"
-      />
-    </div>
+    <SpeedDial
+      :model="controlButtons"
+      direction="left"
+      class="bottom-10 right-10"
+      :hideOnClickOutside="false"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useFetch } from "nuxt/app";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useLayout } from "~/composables/useLayout";
 import { usePage } from "../composables/usePage";
 import type { Video } from "../types";
@@ -63,6 +41,28 @@ const { data } = await useFetch("/api/video");
 const videoList = ref<Video[]>([]);
 
 videoList.value = data.value;
+
+const controlButtons = computed(() => [
+  {
+    icon: "pi pi-plus",
+    command: increCount,
+    disabled: total.value === 9,
+  },
+  {
+    icon: "pi pi-minus",
+    command: decreCount,
+    disabled: total.value === 1,
+  },
+  {
+    icon: "pi pi-chevron-right",
+    command: forward,
+  },
+  {
+    icon: "pi pi-chevron-left",
+    command: backward,
+    disabled: page.value === 1,
+  },
+]);
 </script>
 
 <style>

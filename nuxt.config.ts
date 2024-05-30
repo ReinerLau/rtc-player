@@ -5,5 +5,8 @@ export default defineNuxtConfig({
   imports: {
     autoImport: false,
   },
-  css: ["primevue/resources/themes/aura-dark-green/theme.css"],
+  css: [
+    "primevue/resources/themes/aura-dark-green/theme.css",
+    "primeicons/primeicons.css",
+  ],
 });

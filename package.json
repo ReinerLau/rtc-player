@@ -17,6 +17,7 @@
     "better-sqlite3": "^10.0.0",
     "drizzle-orm": "^0.30.10",
     "nuxt": "^3.11.2",
+    "primeicons": "^7.0.0",
     "primevue": "^3.52.0",
     "vue": "^3.4.27",
     "vue-router": "^4.3.2"
