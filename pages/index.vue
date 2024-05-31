@@ -23,10 +23,12 @@
       :hideOnClickOutside="false"
     />
   </div>
-  <Sidebar v-model:visible="visible" header="配置" position="right">
-    <div class="text-right">
-      <Button class="mb-2" icon="pi pi-plus" size="small" @click="addVideo" />
-    </div>
+  <Sidebar v-model:visible="visible" position="right">
+    <template #header>
+      <div class="text-right">
+        <Button class="mb-2" icon="pi pi-plus" size="small" @click="addVideo" />
+      </div>
+    </template>
     <Panel class="mb-2" v-for="video in setupVideoList" :header="video.name">
       <template #icons>
         <Button icon="pi pi-cog" size="small" text rounded />
