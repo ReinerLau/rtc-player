@@ -17,6 +17,7 @@ export const useSetup = () => {
 
   const addVideo = () => {
     videoFormVisible.value = true;
+    formTitle.value = "添加视频";
   };
 
   const cancelVideo = () => {
@@ -43,10 +44,18 @@ export const useSetup = () => {
     };
   };
 
-  const videoData = ref({
+  const videoData = ref<Video>({
     name: "",
     url: "",
   });
+
+  const editVideo = (data: Video) => {
+    videoFormVisible.value = true;
+    videoData.value = { ...data };
+    formTitle.value = "编辑视频";
+  };
+
+  const formTitle = ref("添加视频");
 
   return {
     visible,
@@ -57,5 +66,7 @@ export const useSetup = () => {
     saveVideo,
     videoData,
     cancelVideo,
+    editVideo,
+    formTitle,
   };
 };

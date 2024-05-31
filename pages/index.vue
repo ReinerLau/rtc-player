@@ -31,7 +31,13 @@
     </template>
     <Panel class="mb-2" v-for="video in setupVideoList" :header="video.name">
       <template #icons>
-        <Button icon="pi pi-cog" size="small" text rounded />
+        <Button
+          icon="pi pi-cog"
+          size="small"
+          text
+          rounded
+          @click="() => editVideo(video)"
+        />
       </template>
       <template #default>
         {{ video.url }}
@@ -41,7 +47,7 @@
   <Dialog
     v-model:visible="videoFormVisible"
     modal
-    header="添加视频"
+    :header="formTitle"
     @hide="cancelVideo"
   >
     <template #default>
@@ -90,6 +96,8 @@ const {
   cancelVideo,
   saveVideo,
   videoData,
+  editVideo,
+  formTitle,
 } = useSetup();
 
 const { data } = await useFetch("/api/video");

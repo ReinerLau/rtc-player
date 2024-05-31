@@ -45,6 +45,14 @@ describe("配置", () => {
       expect(videoFormVisible.value).toBe(true);
     });
 
+    it("点击新增表单弹窗头部显示添加视频", () => {
+      const { formTitle, addVideo } = useSetup();
+
+      addVideo();
+
+      expect(formTitle.value).toBe("添加视频");
+    });
+
     it("点击取消关闭弹窗", () => {
       const { videoFormVisible, addVideo, cancelVideo } = useSetup();
 
@@ -109,6 +117,45 @@ describe("配置", () => {
       await saveVideo();
 
       expect(videoList.value).toEqual(mockedData);
+    });
+
+    describe("编辑", () => {
+      const curVideoData = {
+        id: 1,
+        name: "test",
+        url: "test",
+      };
+      it("点击编辑显示表单弹窗", () => {
+        const { editVideo, videoFormVisible } = useSetup();
+
+        editVideo(curVideoData);
+
+        expect(videoFormVisible.value).toBe(true);
+      });
+
+      it("点击编辑表单顶部显示编辑视频", () => {
+        const { formTitle, editVideo } = useSetup();
+
+        editVideo(curVideoData);
+
+        expect(formTitle.value).toBe("编辑视频");
+      });
+
+      it("点击编辑表单显示视频信息", () => {
+        const { editVideo, videoData } = useSetup();
+
+        editVideo(curVideoData);
+
+        expect(videoData.value).toEqual(curVideoData);
+      });
+
+      it("点击编辑复制视频信息", () => {
+        const { editVideo, videoData } = useSetup();
+
+        editVideo(curVideoData);
+
+        expect(videoData.value).not.toBe(curVideoData);
+      });
     });
   });
 });
