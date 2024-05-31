@@ -24,12 +24,47 @@
     />
   </div>
   <Sidebar v-model:visible="visible" header="配置" position="right">
+    <div class="text-right">
+      <Button class="mb-2" icon="pi pi-plus" size="small" @click="addVideo" />
+    </div>
     <Panel class="mb-2" v-for="video in setupVideoList" :header="video.name">
       <template #icons>
         <Button icon="pi pi-cog" size="small" text rounded />
       </template>
+      <template #default>
+        {{ video.url }}
+      </template>
     </Panel>
   </Sidebar>
+  <Dialog
+    v-model:visible="videoFormVisible"
+    modal
+    header="添加视频"
+    @hide="cancelVideo"
+  >
+    <template #default>
+      <div class="flex items-center gap-3 mb-2">
+        <span>名称</span>
+        <InputText
+          v-model="videoData.name"
+          class="flex-auto"
+          autocomplete="off"
+        />
+      </div>
+      <div class="flex items-center gap-3 mb-2">
+        <span>地址</span>
+        <InputText
+          v-model="videoData.url"
+          class="flex-auto"
+          autocomplete="off"
+        />
+      </div>
+    </template>
+    <template #footer>
+      <Button severity="secondary" label="取消" @click="cancelVideo"></Button>
+      <Button label="保存" @click="saveVideo"></Button>
+    </template>
+  </Dialog>
 </template>
 
 <script lang="ts" setup>
@@ -44,7 +79,16 @@ const { colCount, total, increCount, decreCount } = useLayout(1);
 
 const { page, forward, backward, getIndex } = usePage();
 
-const { visible, showSidebar, videoList: setupVideoList } = useSetup();
+const {
+  visible,
+  showSidebar,
+  videoList: setupVideoList,
+  videoFormVisible,
+  addVideo,
+  cancelVideo,
+  saveVideo,
+  videoData,
+} = useSetup();
 
 const { data } = await useFetch("/api/video");
 
