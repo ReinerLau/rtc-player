@@ -23,18 +23,28 @@
       :hideOnClickOutside="false"
     />
   </div>
+  <Sidebar v-model:visible="visible" header="配置" position="right">
+    <Panel class="mb-2" v-for="video in setupVideoList" :header="video.name">
+      <template #icons>
+        <Button icon="pi pi-cog" size="small" text rounded />
+      </template>
+    </Panel>
+  </Sidebar>
 </template>
 
 <script lang="ts" setup>
 import { useFetch } from "nuxt/app";
 import { computed, ref } from "vue";
 import { useLayout } from "~/composables/useLayout";
+import { useSetup } from "~/composables/useSetup";
 import { usePage } from "../composables/usePage";
 import type { Video } from "../types";
 
 const { colCount, total, increCount, decreCount } = useLayout(1);
 
 const { page, forward, backward, getIndex } = usePage();
+
+const { visible, showSidebar, videoList: setupVideoList } = useSetup();
 
 const { data } = await useFetch("/api/video");
 
@@ -43,6 +53,10 @@ const videoList = ref<Video[]>([]);
 videoList.value = data.value;
 
 const controlButtons = computed(() => [
+  {
+    icon: "pi pi-cog",
+    command: showSidebar,
+  },
   {
     icon: "pi pi-plus",
     command: increCount,
