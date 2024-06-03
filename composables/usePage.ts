@@ -13,14 +13,9 @@ export const usePage = (initialPage: number = 1) => {
     }
   };
 
-  const getIndex = (total: number, index: number) => {
-    return (page.value - 1) * total + index;
-  };
-
   return {
     page,
     forward,
     backward,
-    getIndex,
   };
 };

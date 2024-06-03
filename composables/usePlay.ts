@@ -1,5 +1,6 @@
 import { SrsRtcPlayerAsync } from "rtc-streamer";
 import type { PlayAllParams, Video } from "~/types";
+import { getIndex } from "~/utils";
 
 export const usePlay = (videoList: Video[]) => {
   const playAll = ({ page, elementList }: PlayAllParams) => {
@@ -9,10 +10,6 @@ export const usePlay = (videoList: Video[]) => {
       videoEl.srcObject = srs.stream;
       srs.play(videoList[getIndex(page, total, index)].url);
     });
-  };
-
-  const getIndex = (page: number, total: number, index: number) => {
-    return (page - 1) * total + index;
   };
 
   return {

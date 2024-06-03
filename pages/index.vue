@@ -10,10 +10,10 @@
       class="relative bg-[#161616] rounded text-white flex justify-center items-center hover:border-2 hover:border-[#00d67d] border-2 border-[#161616] cursor-pointer select-none"
     >
       <div class="absolute top-5 left-5">
-        {{ videoList[getIndex(total, index) - 1]?.name || "" }}
+        {{ videoList[getIndex(page, total, index) - 1]?.name || "" }}
       </div>
       <span class="text-9xl">
-        {{ getIndex(total, index) }}
+        {{ getIndex(page, total, index) }}
       </span>
     </div>
     <SpeedDial
@@ -89,10 +89,11 @@ import { useLayout } from "~/composables/useLayout";
 import { useSetup } from "~/composables/useSetup";
 import { usePage } from "../composables/usePage";
 import type { Video } from "../types";
+import { getIndex } from "../utils";
 
 const { colCount, total, increCount, decreCount } = useLayout(1);
 
-const { page, forward, backward, getIndex } = usePage();
+const { page, forward, backward } = usePage();
 
 const {
   visible,
