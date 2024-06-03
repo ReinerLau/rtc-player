@@ -88,6 +88,7 @@
       <Button label="保存" @click="saveVideo"></Button>
     </template>
   </Dialog>
+  <Toast />
 </template>
 
 <script lang="ts" setup>

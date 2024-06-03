@@ -1,8 +1,11 @@
+import { useToast } from "primevue/usetoast";
 import { ref } from "vue";
 import type { Video } from "~/types";
 import { deleteVideoAPI, fetchAllVideo, postVideo } from "~/utils/api/video";
 
 export const useSetup = () => {
+  const toast = useToast();
+
   const visible = ref(false);
 
   const videoList = ref<Video[]>([]);
@@ -26,6 +29,10 @@ export const useSetup = () => {
   };
 
   const saveVideo = async () => {
+    if (!videoData.value.name || !videoData.value.url) {
+      toast.add({ severity: "warn", summary: "请补充完整信息" });
+      return false;
+    }
     await postVideo(videoData.value);
     videoFormVisible.value = false;
     clearVideo();

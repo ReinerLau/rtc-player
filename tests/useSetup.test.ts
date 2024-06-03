@@ -6,6 +6,12 @@ describe("配置", () => {
   const postVideo = vi.hoisted(() => vi.fn());
   const deleteVideoAPI = vi.hoisted(() => vi.fn());
 
+  vi.mock("primevue/usetoast", () => ({
+    useToast: vi.fn(() => ({
+      add: vi.fn(),
+    })),
+  }));
+
   beforeEach(() => {
     vi.mock("~/utils/api/video", () => ({
       fetchAllVideo,
@@ -114,11 +120,27 @@ describe("配置", () => {
     it("点击保存后重新查询视频列表", async () => {
       const mockedData = [{ id: 1, name: "test" }];
       fetchAllVideo.mockResolvedValue(mockedData);
-      const { saveVideo, videoList } = useSetup();
+      const { saveVideo, videoData, videoList } = useSetup();
+      videoData.value = {
+        name: "test",
+        url: "test",
+      };
 
       await saveVideo();
 
       expect(videoList.value).toEqual(mockedData);
+    });
+
+    it("如果信息没补充完整则提示", async () => {
+      const { saveVideo, videoData } = useSetup();
+      videoData.value = {
+        name: "test",
+        url: "",
+      };
+
+      const res = await saveVideo();
+
+      expect(res).toBe(false);
     });
 
     describe("编辑", () => {
