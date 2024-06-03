@@ -156,7 +156,9 @@ describe("配置", () => {
 
         editVideo(curVideoData);
 
-        expect(videoData.value).not.toBe(curVideoData);
+        curVideoData.name = "test1";
+
+        expect(videoData.value.name).toBe("test");
       });
     });
 
