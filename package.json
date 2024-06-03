@@ -18,12 +18,13 @@
     "nuxt": "^3.11.2",
     "primeicons": "^7.0.0",
     "primevue": "^3.52.0",
-    "rtc-streamer": "^0.2.2",
+    "url-parse": "^1.5.10",
     "vue": "^3.4.27",
     "vue-router": "^4.3.2"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.10",
+    "@types/url-parse": "^1.4.11",
     "@vitejs/plugin-vue": "^5.0.4",
     "drizzle-kit": "^0.21.4",
     "happy-dom": "^14.12.0",

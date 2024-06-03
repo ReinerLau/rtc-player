@@ -1,14 +1,16 @@
-import { SrsRtcPlayerAsync } from "rtc-streamer";
 import type { PlayAllParams, Video } from "~/types";
-import { getIndex } from "~/utils";
+import { getIndex, SrsRtcPlayerAsync } from "~/utils";
 
 export const usePlay = (videoList: Video[]) => {
-  const playAll = ({ page, elementList }: PlayAllParams) => {
-    const total = elementList.length;
-    elementList.forEach((videoEl, index) => {
+  const playAll = ({ page, videoEls }: PlayAllParams) => {
+    const total = videoEls.length;
+    videoEls.forEach((videoEl, index) => {
       const srs = new SrsRtcPlayerAsync();
       videoEl.srcObject = srs.stream;
-      srs.play(videoList[getIndex(page, total, index)].url);
+      const url = videoList[getIndex(page, total, index)]?.url;
+      if (url) {
+        srs.play(url);
+      }
     });
   };
 

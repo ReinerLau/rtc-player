@@ -6,5 +6,5 @@ export interface Video {
 
 export interface PlayAllParams {
   page: number;
-  elementList: HTMLVideoElement[];
+  videoEls: HTMLVideoElement[];
 }

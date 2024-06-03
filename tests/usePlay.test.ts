@@ -4,12 +4,13 @@ import type { Video } from "~/types";
 
 describe("播放视频", () => {
   const play = vi.hoisted(() => vi.fn());
-  vi.mock("rtc-streamer", () => {
-    const SrsRtcPlayerAsync = vi.fn(() => ({
-      play,
-    }));
+  vi.mock("~/utils", async (importOriginal) => {
+    const mod = await importOriginal<typeof import("~/utils")>();
     return {
-      SrsRtcPlayerAsync,
+      ...mod,
+      SrsRtcPlayerAsync: vi.fn(() => ({
+        play,
+      })),
     };
   });
 
@@ -22,12 +23,12 @@ describe("播放视频", () => {
       },
     ];
     const page = 1;
-    const elementList = [document.createElement("video")];
+    const videoEls = [document.createElement("video")];
     const { playAll } = usePlay(videoList);
 
     playAll({
       page,
-      elementList,
+      videoEls,
     });
 
     expect(play).toHaveBeenCalledWith(videoList[0].url);
