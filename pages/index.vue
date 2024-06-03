@@ -7,15 +7,21 @@
   >
     <div
       v-for="index in total"
-      class="relative bg-[#161616] rounded text-white flex justify-center items-center hover:border-2 hover:border-[#00d67d] border-2 border-[#161616] cursor-pointer select-none"
+      class="relative bg-[#161616] rounded text-white flex justify-center items-center hover:border-2 hover:border-[#00d67d] border-2 border-[#161616] cursor-pointer select-none overflow-hidden"
     >
       <div class="absolute top-5 left-5">
         {{ videoList[getIndex(page, total, index) - 1]?.name || "" }}
       </div>
-      <span class="text-9xl">
+      <!-- <span class="text-9xl">
         {{ getIndex(page, total, index) }}
-      </span>
-      <video ref="videoRefs" autoplay muted controls loop />
+      </span> -->
+      <video
+        class="w-full h-full object-fill"
+        ref="videoRefs"
+        autoplay
+        muted
+        loop
+      />
     </div>
     <SpeedDial
       :model="controlButtons"
