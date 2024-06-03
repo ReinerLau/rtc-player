@@ -76,15 +76,15 @@ describe("配置", () => {
       expect(videoData.value).toEqual({ name: "", url: "" });
     });
 
-    it("点击保存关闭弹窗", () => {
+    it("保存成功后关闭弹窗", async () => {
       const { videoFormVisible, saveVideo } = useSetup();
 
-      saveVideo();
+      await saveVideo();
 
       expect(videoFormVisible.value).toBe(false);
     });
 
-    it("点击保存清空表单数据", async () => {
+    it("保存成功后清空表单数据", async () => {
       const { videoData, saveVideo } = useSetup();
       videoData.value = {
         name: "test",

@@ -26,8 +26,8 @@ export const useSetup = () => {
   };
 
   const saveVideo = async () => {
-    videoFormVisible.value = false;
     await postVideo(videoData.value);
+    videoFormVisible.value = false;
     clearVideo();
     await getVideo();
   };
