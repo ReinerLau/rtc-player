@@ -23,6 +23,7 @@
         loop
       />
     </div>
+    <ContextMenu global :model="contextItems" />
     <SpeedDial
       :model="controlButtons"
       direction="left"
@@ -173,6 +174,14 @@ const controlButtons = computed(() => [
     disabled: page.value === 1,
   },
 ]);
+
+const contextItems = [
+  {
+    icon: "pi pi-refresh",
+    label: "重连",
+    command: pullStream,
+  },
+];
 </script>
 
 <style>
