@@ -40,11 +40,11 @@ describe("换页", () => {
     expect(page.value).toBe(1);
   });
 
-  it("每页4个视频，第3页，第3个视频的对应序号为11", () => {
+  it("每页4个视频，第3页，第2个视频的对应序号为10", () => {
     const { getIndex } = usePage(3);
 
-    const index = getIndex(4, 3);
+    const index = getIndex(4, 2);
 
-    expect(index).toBe(11);
+    expect(index).toBe(10);
   });
 });
