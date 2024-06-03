@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import type { Video } from "~/types";
-import { fetchAllVideo, postVideo } from "~/utils/api/video";
+import { deleteVideoAPI, fetchAllVideo, postVideo } from "~/utils/api/video";
 
 export const useSetup = () => {
   const visible = ref(false);
@@ -37,6 +37,11 @@ export const useSetup = () => {
     videoList.value = data;
   };
 
+  const deleteVideo = async (id: number) => {
+    await deleteVideoAPI(id);
+    await getVideo();
+  };
+
   const clearVideo = () => {
     videoData.value = {
       name: "",
@@ -68,5 +73,6 @@ export const useSetup = () => {
     cancelVideo,
     editVideo,
     formTitle,
+    deleteVideo,
   };
 };

@@ -38,6 +38,13 @@
           rounded
           @click="() => editVideo(video)"
         />
+        <Button
+          icon="pi pi-trash"
+          size="small"
+          text
+          rounded
+          @click="() => deleteVideo(video.id!)"
+        />
       </template>
       <template #default>
         {{ video.url }}
@@ -98,6 +105,7 @@ const {
   videoData,
   editVideo,
   formTitle,
+  deleteVideo,
 } = useSetup();
 
 const { data } = await useFetch("/api/video");

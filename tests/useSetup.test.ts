@@ -4,11 +4,13 @@ import { useSetup } from "~/composables/useSetup";
 describe("配置", () => {
   const fetchAllVideo = vi.hoisted(() => vi.fn());
   const postVideo = vi.hoisted(() => vi.fn());
+  const deleteVideoAPI = vi.hoisted(() => vi.fn());
 
   beforeEach(() => {
     vi.mock("~/utils/api/video", () => ({
       fetchAllVideo,
       postVideo,
+      deleteVideoAPI,
     }));
   });
 
@@ -155,6 +157,27 @@ describe("配置", () => {
         editVideo(curVideoData);
 
         expect(videoData.value).not.toBe(curVideoData);
+      });
+    });
+
+    describe("删除", () => {
+      it("happy path", () => {
+        const { deleteVideo } = useSetup();
+        const id = 1;
+
+        deleteVideo(id);
+
+        expect(deleteVideoAPI).toHaveBeenCalledWith(id);
+      });
+
+      it("删除后重新查询视频列表", async () => {
+        const mockedData = [{ id: 1, name: "test" }];
+        fetchAllVideo.mockResolvedValue(mockedData);
+        const { deleteVideo, videoList } = useSetup();
+
+        await deleteVideo(1);
+
+        expect(videoList.value).toEqual(mockedData);
       });
     });
   });

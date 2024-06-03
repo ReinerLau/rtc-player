@@ -17,3 +17,9 @@ export const postVideo = async (body: Video) => {
     });
   }
 };
+
+export const deleteVideoAPI = async (id: number) => {
+  await $fetch(`/api/video/${id}`, {
+    method: "delete",
+  });
+};
