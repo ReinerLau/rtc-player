@@ -12,9 +12,9 @@
       <div class="absolute top-5 left-5">
         {{ videoList[getIndex(page, total, index) - 1]?.name || "" }}
       </div>
-      <!-- <span class="text-9xl">
+      <span class="absolute top-5 right-5">
         {{ getIndex(page, total, index) }}
-      </span> -->
+      </span>
       <video
         class="w-full h-full object-fill"
         ref="videoRefs"
