@@ -127,12 +127,13 @@ const videoList = ref<Video[]>([]);
 
 videoList.value = data.value;
 
-const { playAll } = usePlay(videoList.value);
+const { playAll, closeAll } = usePlay(videoList.value);
 
 const videoRefs = ref<HTMLVideoElement[]>();
 
 const pullStream = async () => {
   await nextTick();
+  closeAll();
   playAll({ page: page.value, videoEls: videoRefs.value! });
 };
 

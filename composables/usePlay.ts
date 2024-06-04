@@ -5,14 +5,15 @@ export const usePlay = (videoList: Video[]) => {
   const srsList: SrsRtcPlayerAsync[] = [];
 
   const playAll = ({ page, videoEls }: PlayAllParams) => {
-    closeAll();
     const total = videoEls.length;
     videoEls.forEach((videoEl, index) => {
-      const srs = new SrsRtcPlayerAsync();
-      srsList.push(srs);
-      videoEl.srcObject = srs.stream;
-      const url = videoList[getIndex(page, total, index)]?.url;
+      const video = videoList[getIndex(page, total, index)];
+      const url = video?.url;
       if (url) {
+        const srs = new SrsRtcPlayerAsync();
+        srsList.push(srs);
+        videoEl.srcObject = srs.stream;
+        video.isPlaying = true;
         srs.play(url);
       }
     });
@@ -23,9 +24,13 @@ export const usePlay = (videoList: Video[]) => {
       srs.close();
     });
     srsList.length = 0;
+    videoList.forEach((video) => {
+      video.isPlaying = false;
+    });
   };
 
   return {
     playAll,
+    closeAll,
   };
 };
