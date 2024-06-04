@@ -134,3 +134,5 @@ dist
 sqlite.db
 
 drizzle
+
+.output
