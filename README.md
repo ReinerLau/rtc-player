@@ -1,75 +1,31 @@
-# Nuxt 3 Minimal Starter
+# 开发环境
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+安装依赖
 
-## Setup
-
-Make sure to install the dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
+```shell
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+初始化数据库
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+```shell
+pnpm db:init
 ```
 
-## Production
+运行
 
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+```shell
+pnpm dev
 ```
 
-Locally preview production build:
+打开 http://localhost:3000
 
-```bash
-# npm
-npm run preview
+# docker 部署
 
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+```shell
+docker build -t rtc-player .
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+```shell
+docker run -d -p 3000:3000 rtc-player
+```
