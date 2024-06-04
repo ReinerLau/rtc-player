@@ -55,7 +55,9 @@
         />
       </template>
       <template #default>
-        {{ video.url }}
+        <div class="text-ellipsis overflow-hidden">
+          {{ video.url }}
+        </div>
       </template>
     </Panel>
   </Sidebar>
