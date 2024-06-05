@@ -125,11 +125,15 @@ const { play, closeAll, videoRefs } = usePlay(videoList.value);
 const pullStream = async () => {
   await nextTick();
   closeAll();
-  play({ page: page.value });
+  for (let videoElIndex = 0; videoElIndex < total.value; videoElIndex++) {
+    const videoIndex = getIndex(page.value, total.value, videoElIndex);
+    const videoEl = videoRefs.value![videoElIndex];
+    play(videoIndex, videoEl);
+  }
 };
 
 onMounted(() => {
-  play({ page: page.value });
+  play(1, videoRefs.value![0]);
 });
 
 const controlButtons = computed(() => [

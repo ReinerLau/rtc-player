@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { usePlay } from "~/composables/usePlay";
 import type { Video } from "~/types";
+import { getIndex } from "~/utils";
 
 describe("播放视频", () => {
   vi.mock("~/utils", async (importOriginal) => {
@@ -27,20 +28,22 @@ describe("播放视频", () => {
         url: "test1",
       },
     ];
-    const page = 1;
+    const total = 4;
     const { play, videoRefs } = usePlay(videoList);
     videoRefs.value = [
       document.createElement("video"),
       document.createElement("video"),
     ];
 
-    play({
-      page,
-    });
+    for (let videoElIndex = 0; videoElIndex < total; videoElIndex++) {
+      const videoIndex = getIndex(1, total, videoElIndex);
+      const videoEl = videoRefs.value[videoElIndex];
+      play(videoIndex, videoEl);
+    }
+
     const isPlayingVideoCount = videoList.filter(
       (video) => video.isPlaying
     ).length;
-
     expect(isPlayingVideoCount).toBe(2);
   });
 
@@ -51,22 +54,10 @@ describe("播放视频", () => {
         name: "test",
         url: "test",
       },
-      {
-        id: 2,
-        name: "test1",
-        url: "test1",
-      },
     ];
-    const page = 1;
-    const { closeAll, play, videoRefs } = usePlay(videoList);
-    videoRefs.value = [
-      document.createElement("video"),
-      document.createElement("video"),
-    ];
+    const { closeAll, play } = usePlay(videoList);
 
-    play({
-      page,
-    });
+    play(0, document.createElement("video"));
 
     closeAll();
 
