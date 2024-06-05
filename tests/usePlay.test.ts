@@ -55,16 +55,18 @@ describe("播放视频", () => {
         url: "test",
       },
     ];
-    const { closeAll, play } = usePlay(videoList);
+    const { closeAll, play, videoRefs } = usePlay(videoList);
+    videoRefs.value = [document.createElement("video")];
 
     play(0, document.createElement("video"));
-
     closeAll();
 
     const isPlayingVideoCount = videoList.filter(
       (video) => video.isPlaying
     ).length;
-
     expect(isPlayingVideoCount).toBe(0);
+    expect(
+      videoRefs.value?.every((videoEl) => videoEl.srcObject === null)
+    ).toBe(true);
   });
 });

@@ -26,6 +26,9 @@ export const usePlay = (videoList: Video[]) => {
     videoList.forEach((video) => {
       video.isPlaying = false;
     });
+    videoRefs.value?.forEach((videoEl) => {
+      videoEl.srcObject = null;
+    });
   };
 
   return {
