@@ -19,6 +19,7 @@ export const useIndex = async () => {
     editVideo,
     formTitle,
     deleteVideo,
+    setupVideoRefs,
   } = useSetup();
 
   const videoList = ref<Video[]>([]);
@@ -48,5 +49,6 @@ export const useIndex = async () => {
     editVideo,
     formTitle,
     deleteVideo,
+    setupVideoRefs,
   };
 };

@@ -1,3 +1,4 @@
+import Sortable from "sortablejs";
 import { ref } from "vue";
 import type { Video } from "~/types";
 import { deleteVideoAPI, fetchAllVideo, postVideo } from "~/utils/api/video";
@@ -7,10 +8,21 @@ export const useSetup = () => {
 
   const videoList = ref<Video[]>([]);
 
+  let sortable: Sortable;
+  const setupVideoRefs = ref<HTMLElement>();
+
   const showSidebar = async () => {
     visible.value = true;
 
     await getVideo();
+
+    sortable = new Sortable(setupVideoRefs.value!, {
+      animation: 150,
+    });
+  };
+
+  const isSortable = () => {
+    return sortable ? true : false;
   };
 
   const videoFormVisible = ref(false);
@@ -79,5 +91,7 @@ export const useSetup = () => {
     editVideo,
     formTitle,
     deleteVideo,
+    setupVideoRefs,
+    isSortable,
   };
 };

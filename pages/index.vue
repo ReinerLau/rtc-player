@@ -37,29 +37,35 @@
         <Button class="mb-2" icon="pi pi-plus" size="small" @click="addVideo" />
       </div>
     </template>
-    <Panel class="mb-2" v-for="video in setupVideoList" :header="video.name">
-      <template #icons>
-        <Button
-          icon="pi pi-cog"
-          size="small"
-          text
-          rounded
-          @click="() => editVideo(video)"
-        />
-        <Button
-          icon="pi pi-trash"
-          size="small"
-          text
-          rounded
-          @click="() => deleteVideo(video.id!)"
-        />
-      </template>
-      <template #default>
-        <div class="text-ellipsis overflow-hidden">
-          {{ video.url }}
+    <template #default>
+      <div ref="setupVideoRefs">
+        <div v-for="video in setupVideoList" :key="video.id">
+          <Panel class="mb-2" :header="video.name">
+            <template #icons>
+              <Button
+                icon="pi pi-cog"
+                size="small"
+                text
+                rounded
+                @click="() => editVideo(video)"
+              />
+              <Button
+                icon="pi pi-trash"
+                size="small"
+                text
+                rounded
+                @click="() => deleteVideo(video.id!)"
+              />
+            </template>
+            <template #default>
+              <div class="text-ellipsis overflow-hidden">
+                {{ video.url }}
+              </div>
+            </template>
+          </Panel>
         </div>
-      </template>
-    </Panel>
+      </div>
+    </template>
   </Sidebar>
   <Dialog
     v-model:visible="videoFormVisible"
@@ -114,6 +120,7 @@ const {
   editVideo,
   formTitle,
   deleteVideo,
+  setupVideoRefs,
 } = await useIndex();
 
 const { colCount, total, increCount, decreCount } = useLayout(1);

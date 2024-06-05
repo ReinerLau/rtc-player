@@ -11,6 +11,9 @@ describe("配置", () => {
       add: vi.fn(),
     })),
   }));
+  vi.mock("sortablejs", () => ({
+    default: vi.fn(),
+  }));
 
   beforeEach(() => {
     vi.mock("~/utils/api/video", () => ({
@@ -41,6 +44,15 @@ describe("配置", () => {
       await showSidebar();
 
       expect(videoList.value).toEqual(mockedData);
+    });
+
+    it("显示弹窗后可拖拽视频列表项", async () => {
+      const { showSidebar, isSortable, setupVideoRefs } = useSetup();
+      setupVideoRefs.value = document.createElement("div");
+
+      await showSidebar();
+
+      expect(isSortable()).toBe(true);
     });
   });
 
