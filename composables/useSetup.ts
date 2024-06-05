@@ -36,12 +36,14 @@ export const useSetup = () => {
     await postVideo(videoData.value);
     videoFormVisible.value = false;
     clearVideo();
-    await getVideo();
+    const result = await getVideo();
+    return result;
   };
 
   const getVideo = async () => {
     const data = await fetchAllVideo();
     videoList.value = data;
+    return data;
   };
 
   const deleteVideo = async (id: number) => {

@@ -87,7 +87,7 @@
     </template>
     <template #footer>
       <Button severity="secondary" label="取消" @click="cancelVideo"></Button>
-      <Button label="保存" @click="saveVideo"></Button>
+      <Button label="保存" @click="saveVideoThenUpdate"></Button>
     </template>
   </Dialog>
   <Toast />
@@ -135,6 +135,13 @@ const pullStream = async () => {
   await nextTick();
   closeAll();
   playAll({ page: page.value, videoEls: videoRefs.value! });
+};
+
+const saveVideoThenUpdate = async () => {
+  const result = await saveVideo();
+  if (result) {
+    videoList.value = result;
+  }
 };
 
 onMounted(() => {

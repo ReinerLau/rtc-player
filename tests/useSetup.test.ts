@@ -131,6 +131,19 @@ describe("配置", () => {
       expect(videoList.value).toEqual(mockedData);
     });
 
+    it("保存后更新主页视频列表", async () => {
+      const mockedData = [{ id: 1, name: "test" }];
+      fetchAllVideo.mockResolvedValue(mockedData);
+      const { saveVideo, videoData } = useSetup();
+      videoData.value = {
+        name: "test",
+        url: "test",
+      };
+
+      const videoList = await saveVideo();
+      expect(videoList).toEqual(mockedData);
+    });
+
     it("如果信息没补充完整则提示", async () => {
       const { saveVideo, videoData } = useSetup();
       videoData.value = {
