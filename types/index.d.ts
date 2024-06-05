@@ -4,7 +4,3 @@ export interface Video {
   url: string;
   isPlaying?: boolean;
 }
-
-export interface PlayAllParams {
-  page: number;
-}
