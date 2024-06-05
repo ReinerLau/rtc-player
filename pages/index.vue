@@ -10,10 +10,10 @@
       class="relative bg-[#161616] rounded text-white flex justify-center items-center hover:border-2 hover:border-[#00d67d] border-2 border-[#161616] cursor-pointer select-none overflow-hidden"
     >
       <div class="absolute top-5 left-5">
-        {{ videoList[getIndex(page, total, index) - 1]?.name || "" }}
+        {{ videoList[getIndex(page, total, index - 1)]?.name || "" }}
       </div>
       <span class="absolute top-5 right-5">
-        {{ getIndex(page, total, index) }}
+        {{ getIndex(page, total, index - 1) + 1 }}
       </span>
       <video
         class="w-full h-full object-fill"
