@@ -13,25 +13,25 @@ describe("播放视频", () => {
       })),
     };
   });
-  const videoList: Video[] = [
-    {
-      id: 1,
-      name: "test",
-      url: "test",
-    },
-    {
-      id: 2,
-      name: "test1",
-      url: "test1",
-    },
-  ];
-  const page = 1;
-  const videoEls = [
-    document.createElement("video"),
-    document.createElement("video"),
-  ];
 
   it("happy path", () => {
+    const videoList: Video[] = [
+      {
+        id: 1,
+        name: "test",
+        url: "test",
+      },
+      {
+        id: 2,
+        name: "test1",
+        url: "test1",
+      },
+    ];
+    const page = 1;
+    const videoEls = [
+      document.createElement("video"),
+      document.createElement("video"),
+    ];
     const { playAll } = usePlay(videoList);
 
     playAll({
@@ -46,6 +46,23 @@ describe("播放视频", () => {
   });
 
   it("每次拉流前先关闭已有视频流", () => {
+    const videoList: Video[] = [
+      {
+        id: 1,
+        name: "test",
+        url: "test",
+      },
+      {
+        id: 2,
+        name: "test1",
+        url: "test1",
+      },
+    ];
+    const page = 1;
+    const videoEls = [
+      document.createElement("video"),
+      document.createElement("video"),
+    ];
     const { closeAll, playAll } = usePlay(videoList);
 
     playAll({
