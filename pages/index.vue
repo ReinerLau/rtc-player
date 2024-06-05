@@ -94,38 +94,31 @@
 </template>
 
 <script lang="ts" setup>
-import { useFetch } from "nuxt/app";
 import { computed, nextTick, onMounted, ref } from "vue";
+import { useIndex } from "~/composables/useIndex";
 import { useLayout } from "~/composables/useLayout";
-import { useSetup } from "~/composables/useSetup";
 import { usePage } from "../composables/usePage";
 import { usePlay } from "../composables/usePlay";
-import type { Video } from "../types";
 import { getIndex } from "../utils";
 
-const { colCount, total, increCount, decreCount } = useLayout(1);
-
-const { page, forward, backward } = usePage();
-
 const {
+  videoList,
+  saveVideoThenUpdate,
   visible,
   showSidebar,
   videoList: setupVideoList,
   videoFormVisible,
   addVideo,
   cancelVideo,
-  saveVideo,
   videoData,
   editVideo,
   formTitle,
   deleteVideo,
-} = useSetup();
+} = await useIndex();
 
-const { data } = await useFetch("/api/video");
+const { colCount, total, increCount, decreCount } = useLayout(1);
 
-const videoList = ref<Video[]>([]);
-
-videoList.value = data.value;
+const { page, forward, backward } = usePage();
 
 const { playAll, closeAll } = usePlay(videoList.value);
 
@@ -135,13 +128,6 @@ const pullStream = async () => {
   await nextTick();
   closeAll();
   playAll({ page: page.value, videoEls: videoRefs.value! });
-};
-
-const saveVideoThenUpdate = async () => {
-  const result = await saveVideo();
-  if (result) {
-    videoList.value = result;
-  }
 };
 
 onMounted(() => {
