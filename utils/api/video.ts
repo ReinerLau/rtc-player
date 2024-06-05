@@ -23,3 +23,13 @@ export const deleteVideoAPI = async (id: number) => {
     method: "delete",
   });
 };
+
+export const sortVideoAPI = async (oldIndex: number, newIndex: number) => {
+  await $fetch("/api/video/sort", {
+    method: "put",
+    body: {
+      oldIndex,
+      newIndex,
+    },
+  });
+};

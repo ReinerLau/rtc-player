@@ -1,7 +1,12 @@
-import Sortable from "sortablejs";
+import Sortable, { type SortableEvent } from "sortablejs";
 import { ref } from "vue";
 import type { Video } from "~/types";
-import { deleteVideoAPI, fetchAllVideo, postVideo } from "~/utils/api/video";
+import {
+  deleteVideoAPI,
+  fetchAllVideo,
+  postVideo,
+  sortVideoAPI,
+} from "~/utils/api/video";
 
 export const useSetup = () => {
   const visible = ref(false);
@@ -18,11 +23,21 @@ export const useSetup = () => {
 
     sortable = new Sortable(setupVideoRefs.value!, {
       animation: 150,
+      onEnd: onSortEnd,
     });
   };
 
   const isSortable = () => {
     return sortable ? true : false;
+  };
+
+  const onSortEnd = ({ oldIndex, newIndex }: SortableEvent) => {
+    updateOrder(oldIndex!, newIndex!);
+  };
+
+  const updateOrder = async (oldIndex: number, newIndex: number) => {
+    await sortVideoAPI(oldIndex, newIndex);
+    await getVideo();
   };
 
   const videoFormVisible = ref(false);
@@ -93,5 +108,6 @@ export const useSetup = () => {
     deleteVideo,
     setupVideoRefs,
     isSortable,
+    updateOrder,
   };
 };

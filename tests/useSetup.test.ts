@@ -5,6 +5,7 @@ describe("配置", () => {
   const fetchAllVideo = vi.hoisted(() => vi.fn());
   const postVideo = vi.hoisted(() => vi.fn());
   const deleteVideoAPI = vi.hoisted(() => vi.fn());
+  const sortVideoAPI = vi.hoisted(() => vi.fn());
 
   vi.mock("primevue/usetoast", () => ({
     useToast: vi.fn(() => ({
@@ -20,6 +21,7 @@ describe("配置", () => {
       fetchAllVideo,
       postVideo,
       deleteVideoAPI,
+      sortVideoAPI,
     }));
   });
 
@@ -45,7 +47,9 @@ describe("配置", () => {
 
       expect(videoList.value).toEqual(mockedData);
     });
+  });
 
+  describe("排序", () => {
     it("显示弹窗后可拖拽视频列表项", async () => {
       const { showSidebar, isSortable, setupVideoRefs } = useSetup();
       setupVideoRefs.value = document.createElement("div");
@@ -53,6 +57,19 @@ describe("配置", () => {
       await showSidebar();
 
       expect(isSortable()).toBe(true);
+    });
+
+    it("拖拽后更新列表顺序", async () => {
+      const mockedData = [
+        { id: 1, name: "test", order: 1 },
+        { id: 2, name: "test1", order: 2 },
+      ];
+      fetchAllVideo.mockResolvedValue(mockedData);
+      const { updateOrder } = useSetup();
+
+      await updateOrder(0, 1);
+
+      expect(sortVideoAPI).toHaveBeenCalledWith(0, 1);
     });
   });
 
@@ -222,11 +239,11 @@ describe("配置", () => {
       it("删除后重新查询视频列表", async () => {
         const mockedData = [{ id: 1, name: "test" }];
         fetchAllVideo.mockResolvedValue(mockedData);
-        const { deleteVideo, videoList } = useSetup();
+        const { deleteVideo } = useSetup();
 
         await deleteVideo(1);
 
-        expect(videoList.value).toEqual(mockedData);
+        expect(deleteVideoAPI).toHaveBeenCalledWith(1);
       });
     });
   });

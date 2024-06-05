@@ -4,5 +4,11 @@ import { videos } from "~/utils/db/schema";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  await db.insert(videos).values(body);
+
+  const length = db.select().from(videos).all().length;
+
+  await db.insert(videos).values({
+    ...body,
+    order: length,
+  });
 });

@@ -4,4 +4,5 @@ export const videos = sqliteTable("videos", {
   id: integer("id").primaryKey(),
   name: text("name").notNull(),
   url: text("url").notNull(),
+  order: integer("order", { mode: "number" }).notNull(),
 });
