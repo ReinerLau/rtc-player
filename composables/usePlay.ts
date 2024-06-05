@@ -6,7 +6,7 @@ export const usePlay = (videoList: Video[]) => {
   const srsList: SrsRtcPlayerAsync[] = [];
   const videoRefs = ref<HTMLVideoElement[]>();
 
-  const playAll = ({ page }: PlayAllParams) => {
+  const play = ({ page }: PlayAllParams) => {
     const videoEls = videoRefs.value!;
     const total = videoEls.length;
     videoEls.forEach((videoEl, index) => {
@@ -33,7 +33,7 @@ export const usePlay = (videoList: Video[]) => {
   };
 
   return {
-    playAll,
+    play,
     closeAll,
     videoRefs,
   };

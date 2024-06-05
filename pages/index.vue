@@ -120,16 +120,16 @@ const { colCount, total, increCount, decreCount } = useLayout(1);
 
 const { page, forward, backward } = usePage();
 
-const { playAll, closeAll, videoRefs } = usePlay(videoList.value);
+const { play, closeAll, videoRefs } = usePlay(videoList.value);
 
 const pullStream = async () => {
   await nextTick();
   closeAll();
-  playAll({ page: page.value });
+  play({ page: page.value });
 };
 
 onMounted(() => {
-  playAll({ page: page.value });
+  play({ page: page.value });
 });
 
 const controlButtons = computed(() => [

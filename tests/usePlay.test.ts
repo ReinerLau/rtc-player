@@ -14,7 +14,7 @@ describe("播放视频", () => {
     };
   });
 
-  it("happy path", () => {
+  it("同时拉取多个视频流", () => {
     const videoList: Video[] = [
       {
         id: 1,
@@ -28,13 +28,13 @@ describe("播放视频", () => {
       },
     ];
     const page = 1;
-    const { playAll, videoRefs } = usePlay(videoList);
+    const { play, videoRefs } = usePlay(videoList);
     videoRefs.value = [
       document.createElement("video"),
       document.createElement("video"),
     ];
 
-    playAll({
+    play({
       page,
     });
     const isPlayingVideoCount = videoList.filter(
@@ -58,13 +58,13 @@ describe("播放视频", () => {
       },
     ];
     const page = 1;
-    const { closeAll, playAll, videoRefs } = usePlay(videoList);
+    const { closeAll, play, videoRefs } = usePlay(videoList);
     videoRefs.value = [
       document.createElement("video"),
       document.createElement("video"),
     ];
 
-    playAll({
+    play({
       page,
     });
 
