@@ -1,10 +1,13 @@
+import { ref } from "vue";
 import type { PlayAllParams, Video } from "~/types";
 import { getIndex, SrsRtcPlayerAsync } from "~/utils";
 
 export const usePlay = (videoList: Video[]) => {
   const srsList: SrsRtcPlayerAsync[] = [];
+  const videoRefs = ref<HTMLVideoElement[]>();
 
-  const playAll = ({ page, videoEls }: PlayAllParams) => {
+  const playAll = ({ page }: PlayAllParams) => {
+    const videoEls = videoRefs.value!;
     const total = videoEls.length;
     videoEls.forEach((videoEl, index) => {
       const video = videoList[getIndex(page, total, index)];
@@ -32,5 +35,6 @@ export const usePlay = (videoList: Video[]) => {
   return {
     playAll,
     closeAll,
+    videoRefs,
   };
 };

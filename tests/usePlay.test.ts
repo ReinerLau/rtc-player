@@ -28,15 +28,14 @@ describe("播放视频", () => {
       },
     ];
     const page = 1;
-    const videoEls = [
+    const { playAll, videoRefs } = usePlay(videoList);
+    videoRefs.value = [
       document.createElement("video"),
       document.createElement("video"),
     ];
-    const { playAll } = usePlay(videoList);
 
     playAll({
       page,
-      videoEls,
     });
     const isPlayingVideoCount = videoList.filter(
       (video) => video.isPlaying
@@ -59,15 +58,14 @@ describe("播放视频", () => {
       },
     ];
     const page = 1;
-    const videoEls = [
+    const { closeAll, playAll, videoRefs } = usePlay(videoList);
+    videoRefs.value = [
       document.createElement("video"),
       document.createElement("video"),
     ];
-    const { closeAll, playAll } = usePlay(videoList);
 
     playAll({
       page,
-      videoEls,
     });
 
     closeAll();
