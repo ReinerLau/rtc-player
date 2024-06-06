@@ -1,6 +1,6 @@
 import { useFetch } from "nuxt/app";
 import { useToast } from "primevue/usetoast";
-import { nextTick, ref, watch } from "vue";
+import { computed, nextTick, ref, watch } from "vue";
 import type { Video } from "~/types";
 import { getIndex } from "~/utils";
 import { useLayout } from "./useLayout";
@@ -62,11 +62,48 @@ export const useIndex = async () => {
     });
   };
 
+  const controlButtons = computed(() => [
+    {
+      icon: "pi pi-cog",
+      command: showSidebar,
+    },
+    {
+      icon: "pi pi-plus",
+      command() {
+        increCount();
+        pullStream();
+      },
+      disabled: total.value === 9,
+    },
+    {
+      icon: "pi pi-minus",
+      command() {
+        decreCount();
+        pullStream();
+      },
+      disabled: total.value === 1,
+    },
+    {
+      icon: "pi pi-chevron-right",
+      command() {
+        forward();
+        pullStream();
+      },
+    },
+    {
+      icon: "pi pi-chevron-left",
+      command() {
+        backward();
+        pullStream();
+      },
+      disabled: page.value === 1,
+    },
+  ]);
+
   return {
     videoList,
     saveVideoThenUpdate,
     visible,
-    showSidebar,
     setupVideoList,
     videoFormVisible,
     addVideo,
@@ -80,13 +117,10 @@ export const useIndex = async () => {
     pullStream,
     play,
     videoRefs,
-    increCount,
     colCount,
-    decreCount,
-    forward,
-    backward,
     total,
     page,
     srsList,
+    controlButtons,
   };
 };

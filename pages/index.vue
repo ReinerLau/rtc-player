@@ -100,7 +100,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 import { useIndex } from "~/composables/useIndex";
 import { getIndex } from "../utils";
 
@@ -108,7 +108,6 @@ const {
   videoList,
   saveVideoThenUpdate,
   visible,
-  showSidebar,
   videoList: setupVideoList,
   videoFormVisible,
   addVideo,
@@ -119,57 +118,16 @@ const {
   deleteVideo,
   setupVideoRefs,
   videoRefs,
-  increCount,
   pullStream,
-  decreCount,
   total,
-  forward,
-  backward,
   page,
   colCount,
+  controlButtons,
 } = await useIndex();
 
 onMounted(() => {
   pullStream();
 });
-
-const controlButtons = computed(() => [
-  {
-    icon: "pi pi-cog",
-    command: showSidebar,
-  },
-  {
-    icon: "pi pi-plus",
-    command() {
-      increCount();
-      pullStream();
-    },
-    disabled: total.value === 9,
-  },
-  {
-    icon: "pi pi-minus",
-    command() {
-      decreCount();
-      pullStream();
-    },
-    disabled: total.value === 1,
-  },
-  {
-    icon: "pi pi-chevron-right",
-    command() {
-      forward();
-      pullStream();
-    },
-  },
-  {
-    icon: "pi pi-chevron-left",
-    command() {
-      backward();
-      pullStream();
-    },
-    disabled: page.value === 1,
-  },
-]);
 
 const contextItems = [
   {
