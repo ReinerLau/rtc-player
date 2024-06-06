@@ -39,7 +39,7 @@ export const useIndex = async () => {
     pullStream();
   });
 
-  const saveVideoThenUpdate = async () => {
+  const afterSaveVideo = async () => {
     const result = await saveVideo();
     if (!result) {
       toast.add({ severity: "warn", summary: "请补充完整信息" });
@@ -110,7 +110,7 @@ export const useIndex = async () => {
 
   return {
     videoList,
-    saveVideoThenUpdate,
+    afterSaveVideo,
     visible,
     setupVideoList,
     videoFormVisible,

@@ -93,7 +93,7 @@
     </template>
     <template #footer>
       <Button severity="secondary" label="取消" @click="cancelVideo"></Button>
-      <Button label="保存" @click="saveVideoThenUpdate"></Button>
+      <Button label="保存" @click="afterSaveVideo"></Button>
     </template>
   </Dialog>
   <Toast />
@@ -106,7 +106,7 @@ import { getIndex } from "../utils";
 
 const {
   videoList,
-  saveVideoThenUpdate,
+  afterSaveVideo,
   visible,
   videoList: setupVideoList,
   videoFormVisible,
