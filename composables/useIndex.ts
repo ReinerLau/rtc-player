@@ -62,6 +62,26 @@ export const useIndex = async () => {
     });
   };
 
+  const increVideoCount = () => {
+    const oldMinIndex = getIndex(page.value, total.value, 0);
+    increCount();
+    let newMinIndex = getIndex(page.value, total.value, 0);
+    while (oldMinIndex < newMinIndex) {
+      page.value--;
+      newMinIndex = getIndex(page.value, total.value, 0);
+    }
+  };
+
+  const decreVideoCount = () => {
+    const oldMinIndex = getIndex(page.value, total.value, 0);
+    decreCount();
+    let newMaxIndex = getIndex(page.value, total.value, total.value - 1);
+    while (oldMinIndex > newMaxIndex) {
+      page.value++;
+      newMaxIndex = getIndex(page.value, total.value, total.value - 1);
+    }
+  };
+
   const controlButtons = computed(() => [
     {
       icon: "pi pi-cog",
@@ -70,7 +90,7 @@ export const useIndex = async () => {
     {
       icon: "pi pi-plus",
       command() {
-        increCount();
+        increVideoCount();
         pullStream();
       },
       disabled: total.value === 9,
@@ -78,7 +98,7 @@ export const useIndex = async () => {
     {
       icon: "pi pi-minus",
       command() {
-        decreCount();
+        decreVideoCount();
         pullStream();
       },
       disabled: total.value === 1,
@@ -160,5 +180,7 @@ export const useIndex = async () => {
     getCurVideoIndex,
     fullScreen,
     videoIndex,
+    increVideoCount,
+    decreVideoCount,
   };
 };

@@ -98,4 +98,24 @@ describe("主页", () => {
 
     expect(srsList.value).toHaveLength(1);
   });
+
+  it("当前视频总数为1，页码为2，新增视频总数后，页码为1", async () => {
+    const { increVideoCount, page, colCount } = await useIndex();
+    page.value = 2;
+    colCount.value = 1;
+
+    increVideoCount();
+
+    expect(page.value).toBe(1);
+  });
+
+  it("当前视频总数为4，页码为2，减少视频总数后，页码为5", async () => {
+    const { decreVideoCount, page, colCount } = await useIndex();
+    page.value = 2;
+    colCount.value = 2;
+
+    decreVideoCount();
+
+    expect(page.value).toBe(5);
+  });
 });
