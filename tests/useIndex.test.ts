@@ -63,6 +63,16 @@ describe("主页", () => {
     expect(srsList.value).toHaveLength(1);
   });
 
+  it("获取视频顺序", async () => {
+    const { videoIndex, page, colCount } = await useIndex();
+    page.value = 2;
+    colCount.value = 2;
+
+    const index = videoIndex(3);
+
+    expect(index).toBe(6);
+  });
+
   it("右键获取对应视频顺序", async () => {
     const { onContextMenu, getCurVideoIndex } = await useIndex();
 

@@ -129,6 +129,10 @@ export const useIndex = async () => {
     },
   ];
 
+  const videoIndex = (index: number) => {
+    return getIndex(page.value, total.value, index - 1);
+  };
+
   return {
     videoList,
     afterSaveVideo,
@@ -155,5 +159,6 @@ export const useIndex = async () => {
     onContextMenu,
     getCurVideoIndex,
     fullScreen,
+    videoIndex,
   };
 };

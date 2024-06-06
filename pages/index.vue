@@ -8,13 +8,13 @@
     <div
       v-for="index in total"
       class="relative bg-[#161616] rounded text-white flex justify-center items-center hover:border-2 hover:border-[#00d67d] border-2 border-[#161616] cursor-pointer select-none overflow-hidden"
-      @contextmenu="() => onContextMenu(getIndex(page, total, index - 1))"
+      @contextmenu="() => onContextMenu(videoIndex(index))"
     >
       <div class="absolute top-5 left-5">
-        {{ videoList[getIndex(page, total, index - 1)]?.name || "" }}
+        {{ videoList[videoIndex(index)]?.name || "" }}
       </div>
       <span class="absolute top-5 right-5">
-        {{ getIndex(page, total, index - 1) + 1 }}
+        {{ videoIndex(index) + 1 }}
       </span>
       <video
         class="w-full h-full object-fill"
@@ -103,7 +103,6 @@
 <script lang="ts" setup>
 import { onMounted } from "vue";
 import { useIndex } from "~/composables/useIndex";
-import { getIndex } from "../utils";
 
 const {
   videoList,
@@ -126,6 +125,7 @@ const {
   controlButtons,
   contextItems,
   onContextMenu,
+  videoIndex,
 } = await useIndex();
 
 onMounted(() => {
