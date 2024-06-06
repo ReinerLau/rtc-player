@@ -100,11 +100,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, nextTick, onMounted } from "vue";
+import { computed, onMounted } from "vue";
 import { useIndex } from "~/composables/useIndex";
-import { useLayout } from "~/composables/useLayout";
-import { usePage } from "../composables/usePage";
-import { usePlay } from "../composables/usePlay";
 import { getIndex } from "../utils";
 
 const {
@@ -121,26 +118,20 @@ const {
   formTitle,
   deleteVideo,
   setupVideoRefs,
+  play,
+  videoRefs,
+  increCount,
+  pullStream,
+  decreCount,
+  total,
+  forward,
+  backward,
+  page,
+  colCount,
 } = await useIndex();
 
-const { colCount, total, increCount, decreCount } = useLayout(1);
-
-const { page, forward, backward } = usePage();
-
-const { play, closeAll, videoRefs } = usePlay(videoList.value);
-
-const pullStream = async () => {
-  await nextTick();
-  closeAll();
-  for (let videoElIndex = 0; videoElIndex < total.value; videoElIndex++) {
-    const videoIndex = getIndex(page.value, total.value, videoElIndex);
-    const videoEl = videoRefs.value![videoElIndex];
-    play(videoIndex, videoEl);
-  }
-};
-
 onMounted(() => {
-  play(1, videoRefs.value![0]);
+  play(0, videoRefs.value![0]);
 });
 
 const controlButtons = computed(() => [

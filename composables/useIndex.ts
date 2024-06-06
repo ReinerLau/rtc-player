@@ -1,7 +1,11 @@
 import { useFetch } from "nuxt/app";
 import { useToast } from "primevue/usetoast";
-import { ref, watch } from "vue";
+import { nextTick, ref, watch } from "vue";
 import type { Video } from "~/types";
+import { getIndex } from "~/utils";
+import { useLayout } from "./useLayout";
+import { usePage } from "./usePage";
+import { usePlay } from "./usePlay";
 import { useSetup } from "./useSetup";
 
 export const useIndex = async () => {
@@ -26,6 +30,10 @@ export const useIndex = async () => {
 
   videoList.value = data.value;
 
+  const { play, closeAll, videoRefs } = usePlay(videoList.value);
+  const { colCount, total, increCount, decreCount } = useLayout(1);
+  const { page, forward, backward } = usePage();
+
   watch(setupVideoList, () => {
     videoList.value = setupVideoList.value;
   });
@@ -34,6 +42,16 @@ export const useIndex = async () => {
     const result = await saveVideo();
     if (!result) {
       toast.add({ severity: "warn", summary: "请补充完整信息" });
+    }
+  };
+
+  const pullStream = async () => {
+    await nextTick();
+    closeAll();
+    for (let videoElIndex = 0; videoElIndex < total.value; videoElIndex++) {
+      const videoIndex = getIndex(page.value, total.value, videoElIndex);
+      const videoEl = videoRefs.value![videoElIndex];
+      play(videoIndex, videoEl);
     }
   };
 
@@ -52,5 +70,15 @@ export const useIndex = async () => {
     formTitle,
     deleteVideo,
     setupVideoRefs,
+    pullStream,
+    play,
+    videoRefs,
+    increCount,
+    colCount,
+    decreCount,
+    forward,
+    backward,
+    total,
+    page,
   };
 };
