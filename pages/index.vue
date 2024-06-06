@@ -120,7 +120,6 @@ const {
   videoRefs,
   pullStream,
   total,
-  page,
   colCount,
   controlButtons,
   contextItems,
