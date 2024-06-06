@@ -118,7 +118,6 @@ const {
   formTitle,
   deleteVideo,
   setupVideoRefs,
-  play,
   videoRefs,
   increCount,
   pullStream,
@@ -131,7 +130,7 @@ const {
 } = await useIndex();
 
 onMounted(() => {
-  play(0, videoRefs.value![0]);
+  pullStream();
 });
 
 const controlButtons = computed(() => [
