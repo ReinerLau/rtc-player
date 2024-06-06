@@ -29,22 +29,15 @@ describe("播放视频", () => {
       },
     ];
     const total = 4;
-    const { play, videoRefs } = usePlay(videoList);
-    videoRefs.value = [
-      document.createElement("video"),
-      document.createElement("video"),
-    ];
+    const { play, srsList } = usePlay();
 
     for (let videoElIndex = 0; videoElIndex < total; videoElIndex++) {
       const videoIndex = getIndex(1, total, videoElIndex);
-      const videoEl = videoRefs.value[videoElIndex];
-      play(videoIndex, videoEl);
+      const url = videoList[videoIndex]?.url;
+      play(url);
     }
 
-    const isPlayingVideoCount = videoList.filter(
-      (video) => video.isPlaying
-    ).length;
-    expect(isPlayingVideoCount).toBe(2);
+    expect(srsList.value).toHaveLength(4);
   });
 
   it("每次拉流前先关闭已有视频流", () => {
@@ -55,16 +48,12 @@ describe("播放视频", () => {
         url: "test",
       },
     ];
-    const { closeAll, play, videoRefs } = usePlay(videoList);
+    const { closeAll, play, videoRefs } = usePlay();
     videoRefs.value = [document.createElement("video")];
 
-    play(0, document.createElement("video"));
+    play(videoList[0].url);
     closeAll();
 
-    const isPlayingVideoCount = videoList.filter(
-      (video) => video.isPlaying
-    ).length;
-    expect(isPlayingVideoCount).toBe(0);
     expect(
       videoRefs.value?.every((videoEl) => videoEl.srcObject === null)
     ).toBe(true);

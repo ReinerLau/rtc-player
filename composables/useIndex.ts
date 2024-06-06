@@ -30,12 +30,13 @@ export const useIndex = async () => {
 
   videoList.value = data.value;
 
-  const { play, closeAll, videoRefs } = usePlay(videoList.value);
+  const { play, closeAll, videoRefs, srsList } = usePlay();
   const { colCount, total, increCount, decreCount } = useLayout(1);
   const { page, forward, backward } = usePage();
 
-  watch(setupVideoList, () => {
+  watch(setupVideoList, async () => {
     videoList.value = setupVideoList.value;
+    pullStream();
   });
 
   const saveVideoThenUpdate = async () => {
@@ -46,13 +47,19 @@ export const useIndex = async () => {
   };
 
   const pullStream = async () => {
-    await nextTick();
     closeAll();
     for (let videoElIndex = 0; videoElIndex < total.value; videoElIndex++) {
       const videoIndex = getIndex(page.value, total.value, videoElIndex);
-      const videoEl = videoRefs.value![videoElIndex];
-      play(videoIndex, videoEl);
+      const url = videoList.value[videoIndex]?.url;
+      play(url);
     }
+    await nextTick();
+    srsList.value.forEach((srs, index) => {
+      if (videoRefs.value) {
+        const videoEl = videoRefs.value[index];
+        videoEl.srcObject = srs.stream;
+      }
+    });
   };
 
   return {
@@ -80,5 +87,6 @@ export const useIndex = async () => {
     backward,
     total,
     page,
+    srsList,
   };
 };

@@ -1,31 +1,23 @@
 import { ref } from "vue";
-import type { Video } from "~/types";
 import { SrsRtcPlayerAsync } from "~/utils";
 
-export const usePlay = (videoList: Video[]) => {
-  const srsList: SrsRtcPlayerAsync[] = [];
+export const usePlay = () => {
+  const srsList = ref<SrsRtcPlayerAsync[]>([]);
   const videoRefs = ref<HTMLVideoElement[]>();
 
-  const play = (index: number, videoEl: HTMLVideoElement) => {
-    const video = videoList[index];
-    const url = video?.url;
+  const play = (url: string) => {
+    const srs = new SrsRtcPlayerAsync();
+    srsList.value.push(srs);
     if (url) {
-      const srs = new SrsRtcPlayerAsync();
-      srsList.push(srs);
-      videoEl.srcObject = srs.stream;
-      video.isPlaying = true;
       srs.play(url);
     }
   };
 
   const closeAll = () => {
-    srsList.forEach((srs) => {
+    srsList.value.forEach((srs) => {
       srs.close();
     });
-    srsList.length = 0;
-    videoList.forEach((video) => {
-      video.isPlaying = false;
-    });
+    srsList.value.length = 0;
     videoRefs.value?.forEach((videoEl) => {
       videoEl.srcObject = null;
     });
@@ -35,5 +27,6 @@ export const usePlay = (videoList: Video[]) => {
     play,
     closeAll,
     videoRefs,
+    srsList,
   };
 };
