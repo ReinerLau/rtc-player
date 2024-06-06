@@ -100,6 +100,14 @@ export const useIndex = async () => {
     },
   ]);
 
+  const contextItems = [
+    {
+      icon: "pi pi-refresh",
+      label: "重连",
+      command: pullStream,
+    },
+  ];
+
   return {
     videoList,
     saveVideoThenUpdate,
@@ -122,5 +130,6 @@ export const useIndex = async () => {
     page,
     srsList,
     controlButtons,
+    contextItems,
   };
 };

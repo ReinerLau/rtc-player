@@ -123,19 +123,12 @@ const {
   page,
   colCount,
   controlButtons,
+  contextItems,
 } = await useIndex();
 
 onMounted(() => {
   pullStream();
 });
-
-const contextItems = [
-  {
-    icon: "pi pi-refresh",
-    label: "重连",
-    command: pullStream,
-  },
-];
 </script>
 
 <style>
