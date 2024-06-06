@@ -1,6 +1,6 @@
 import { useFetch } from "nuxt/app";
 import { useToast } from "primevue/usetoast";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import type { Video } from "~/types";
 import { useSetup } from "./useSetup";
 
@@ -26,11 +26,13 @@ export const useIndex = async () => {
 
   videoList.value = data.value;
 
+  watch(setupVideoList, () => {
+    videoList.value = setupVideoList.value;
+  });
+
   const saveVideoThenUpdate = async () => {
     const result = await saveVideo();
-    if (result) {
-      videoList.value = result;
-    } else {
+    if (!result) {
       toast.add({ severity: "warn", summary: "请补充完整信息" });
     }
   };

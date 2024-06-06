@@ -1,4 +1,5 @@
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { nextTick } from "vue";
 import { useIndex } from "~/composables/useIndex";
 
 describe("主页", () => {
@@ -36,13 +37,13 @@ describe("主页", () => {
     expect(videoList.value).toEqual(mockedData);
   });
 
-  it("保存视频后更新主页视频列表", async () => {
-    const mockedData = [{ id: 1, name: "test" }];
-    fetchAllVideo.mockResolvedValue(mockedData);
-    const { videoList, saveVideoThenUpdate } = await useIndex();
+  it("主页视频列表与配置视频列表同步", async () => {
+    const mockedData = [{ id: 1, name: "test", url: "test", order: 1 }];
+    const { videoList, setupVideoList } = await useIndex();
 
-    await saveVideoThenUpdate();
+    setupVideoList.value = mockedData;
 
+    await nextTick();
     expect(videoList.value).toEqual(mockedData);
   });
 });
