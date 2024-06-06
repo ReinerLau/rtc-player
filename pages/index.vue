@@ -8,6 +8,7 @@
     <div
       v-for="index in total"
       class="relative bg-[#161616] rounded text-white flex justify-center items-center hover:border-2 hover:border-[#00d67d] border-2 border-[#161616] cursor-pointer select-none overflow-hidden"
+      @contextmenu="() => onContextMenu(getIndex(page, total, index - 1))"
     >
       <div class="absolute top-5 left-5">
         {{ videoList[getIndex(page, total, index - 1)]?.name || "" }}
@@ -124,6 +125,7 @@ const {
   colCount,
   controlButtons,
   contextItems,
+  onContextMenu,
 } = await useIndex();
 
 onMounted(() => {

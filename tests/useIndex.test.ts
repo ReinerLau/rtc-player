@@ -1,6 +1,7 @@
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { nextTick } from "vue";
 import { useIndex } from "~/composables/useIndex";
+import { getIndex } from "~/utils";
 
 describe("主页", () => {
   const useFetch = vi.hoisted(() => vi.fn());
@@ -44,7 +45,7 @@ describe("主页", () => {
 
   it("主页视频列表与配置视频列表同步", async () => {
     const mockedData = [{ id: 1, name: "test", url: "test", order: 1 }];
-    const { videoList, setupVideoList, videoRefs } = await useIndex();
+    const { videoList, setupVideoList } = await useIndex();
 
     setupVideoList.value = mockedData;
 
@@ -54,11 +55,37 @@ describe("主页", () => {
 
   it("同步视频列表后重新拉流", async () => {
     const mockedData = [{ id: 1, name: "test", url: "test", order: 1 }];
-    const { setupVideoList, srsList, videoRefs } = await useIndex();
+    const { setupVideoList, srsList } = await useIndex();
 
     setupVideoList.value = mockedData;
 
     await nextTick();
+    expect(srsList.value).toHaveLength(1);
+  });
+
+  it("右键获取对应视频顺序", async () => {
+    const { onContextMenu, getCurVideoIndex } = await useIndex();
+
+    onContextMenu(6);
+
+    expect(getCurVideoIndex()).toBe(6);
+  });
+
+  it("全屏", async () => {
+    const { fullScreen, page, onContextMenu, total } = await useIndex();
+
+    onContextMenu(6);
+    fullScreen();
+
+    expect(getIndex(page.value, total.value, 0)).toBe(6);
+  });
+
+  it("全屏后重新拉流", async () => {
+    const { fullScreen, onContextMenu, srsList } = await useIndex();
+
+    onContextMenu(6);
+    fullScreen();
+
     expect(srsList.value).toHaveLength(1);
   });
 });

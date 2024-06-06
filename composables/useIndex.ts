@@ -100,11 +100,32 @@ export const useIndex = async () => {
     },
   ]);
 
+  let curVideoIndex: number;
+
+  const getCurVideoIndex = () => {
+    return curVideoIndex;
+  };
+
+  const onContextMenu = (index: number) => {
+    curVideoIndex = index;
+  };
+
+  const fullScreen = () => {
+    page.value = curVideoIndex + 1;
+    colCount.value = 1;
+    pullStream();
+  };
+
   const contextItems = [
     {
       icon: "pi pi-refresh",
       label: "重连",
       command: pullStream,
+    },
+    {
+      icon: "pi pi-expand",
+      label: "全屏",
+      command: fullScreen,
     },
   ];
 
@@ -131,5 +152,8 @@ export const useIndex = async () => {
     srsList,
     controlButtons,
     contextItems,
+    onContextMenu,
+    getCurVideoIndex,
+    fullScreen,
   };
 };
