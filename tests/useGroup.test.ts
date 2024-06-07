@@ -111,12 +111,23 @@ describe("分组", () => {
 
       expect(groupFormVisible.value).toBe(true);
     });
+
     it("点击编辑后弹窗标题显示编辑分组", () => {
       const { groupFormTitle, editGroup } = useGroup();
 
       editGroup();
 
       expect(groupFormTitle.value).toBe("编辑分组");
+    });
+
+    it("点击编辑表单显示分组信息", () => {
+      const { editGroup, groupList, groupData, selectedGroup } = useGroup();
+      groupList.value = [{ id: 1, name: "test" }];
+      selectedGroup.value = 1;
+
+      editGroup();
+
+      expect(groupData.value).toEqual(groupList.value[0]);
     });
   });
 });
