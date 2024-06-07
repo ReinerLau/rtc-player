@@ -47,7 +47,7 @@
         ></Dropdown>
         <Button icon="pi pi-plus" size="small" @click="addGroup" />
       </div>
-      <div v-if="mode === Mode.VIDEO" ref="setupVideoRefs">
+      <div ref="setupVideoRefs">
         <div v-for="video in setupVideoList" :key="video.id">
           <Panel class="mb-2 cursor-pointer" :header="video.name">
             <template #icons>
@@ -123,7 +123,6 @@
 
 <script lang="ts" setup>
 import { useIndex } from "~/composables/useIndex";
-import { Mode } from "~/composables/useSetup";
 
 const {
   videoList,
@@ -146,7 +145,6 @@ const {
   onContextMenu,
   videoIndex,
   groupList,
-  mode,
   selectedGroup,
   addVideoVisible,
   selectGroup,

@@ -111,8 +111,6 @@ export const useSetup = () => {
 
   const formTitle = ref("添加视频");
 
-  const mode = ref<Mode>(Mode.GROUP);
-
   const addVideoVisible = ref(false);
 
   const selectGroup = (value: number) => {
@@ -137,7 +135,6 @@ export const useSetup = () => {
     isSortable,
     updateOrder,
     groupList,
-    mode,
     selectedGroup,
     addVideoVisible,
     selectGroup,
