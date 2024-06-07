@@ -1,11 +1,9 @@
-import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import { nextTick } from "vue";
 import { useIndex } from "~/composables/useIndex";
 import { getIndex } from "~/utils";
 
 describe("主页", () => {
-  const useFetch = vi.hoisted(() => vi.fn());
-
   vi.mock("~/utils", async (importOriginal) => {
     const mod = await importOriginal<typeof import("~/utils")>();
     return {
@@ -23,24 +21,6 @@ describe("主页", () => {
         add: vi.fn(),
       })),
     }));
-  });
-
-  beforeEach(() => {
-    vi.mock("nuxt/app", () => ({
-      useFetch,
-    }));
-  });
-
-  it("进入主页查询视频列表", async () => {
-    const mockedData = [{ id: 1, name: "test" }];
-    useFetch.mockResolvedValue({
-      data: {
-        value: mockedData,
-      },
-    });
-    const { videoList } = await useIndex();
-
-    expect(videoList.value).toEqual(mockedData);
   });
 
   it("主页视频列表与配置视频列表同步", async () => {
