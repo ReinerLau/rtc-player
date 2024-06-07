@@ -1,4 +1,3 @@
-import { useFetch } from "nuxt/app";
 import { useToast } from "primevue/usetoast";
 import { computed, nextTick, ref, watch } from "vue";
 import type { Video } from "~/types";
@@ -10,7 +9,6 @@ import { useSetup } from "./useSetup";
 
 export const useIndex = async () => {
   const toast = useToast();
-  const { data } = await useFetch("/api/video");
   const {
     visible,
     showSidebar,
@@ -27,8 +25,6 @@ export const useIndex = async () => {
   } = useSetup();
 
   const videoList = ref<Video[]>([]);
-
-  videoList.value = data.value;
 
   const { play, closeAll, videoRefs, srsList } = usePlay();
   const { colCount, total, increCount, decreCount } = useLayout(1);
