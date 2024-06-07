@@ -6,6 +6,6 @@ export interface Video {
 }
 
 export interface Group {
-  id: number;
+  id?: number;
   name: string;
 }

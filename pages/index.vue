@@ -83,7 +83,12 @@
       />
     </template>
   </Sidebar>
-  <GroupFormDialog v-model:visible="groupFormVisible" />
+  <GroupFormDialog
+    v-model:visible="groupFormVisible"
+    v-model:data="groupData"
+    @save="saveGroup"
+    @cancel="cancelGroup"
+  />
   <Dialog
     v-model:visible="videoFormVisible"
     modal
@@ -147,6 +152,9 @@ const {
   selectGroup,
   groupFormVisible,
   addGroup,
+  saveGroup,
+  groupData,
+  cancelGroup,
 } = await useIndex();
 </script>
 

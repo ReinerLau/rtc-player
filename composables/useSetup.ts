@@ -15,7 +15,8 @@ export const enum Mode {
 }
 
 export const useSetup = () => {
-  const { addGroup, groupFormVisible } = useGroup();
+  const { addGroup, groupFormVisible, saveGroup, groupData, cancelGroup } =
+    useGroup();
 
   const visible = ref(false);
 
@@ -144,5 +145,8 @@ export const useSetup = () => {
     selectGroup,
     groupFormVisible,
     addGroup,
+    saveGroup,
+    groupData,
+    cancelGroup,
   };
 };
