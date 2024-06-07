@@ -51,6 +51,20 @@ describe("配置", () => {
 
       expect(groupList.value).toEqual(groupData);
     });
+
+    it("没选择分组前不显示添加视频按钮", () => {
+      const { addVideoVisible } = useSetup();
+
+      expect(addVideoVisible.value).toBe(false);
+    });
+
+    it("选择分组后显示添加视频按钮", () => {
+      const { selectGroup, addVideoVisible } = useSetup();
+
+      selectGroup(1);
+
+      expect(addVideoVisible.value).toBe(true);
+    });
   });
 
   describe("视频列表", () => {

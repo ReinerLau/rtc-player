@@ -111,6 +111,14 @@ export const useSetup = () => {
 
   const selectedGroup = ref<number>();
 
+  const addVideoVisible = ref(false);
+
+  const selectGroup = (value: number) => {
+    if (value) {
+      addVideoVisible.value = true;
+    }
+  };
+
   return {
     visible,
     showSidebar,
@@ -129,5 +137,7 @@ export const useSetup = () => {
     groupList,
     mode,
     selectedGroup,
+    addVideoVisible,
+    selectGroup,
   };
 };

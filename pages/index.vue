@@ -32,12 +32,7 @@
       :hideOnClickOutside="false"
     />
   </div>
-  <Sidebar v-model:visible="visible" position="right">
-    <template #header>
-      <div class="text-right">
-        <Button class="mb-2" icon="pi pi-plus" size="small" @click="addVideo" />
-      </div>
-    </template>
+  <Sidebar v-model:visible="visible" position="right" header="配置">
     <template #default>
       <Dropdown
         filter
@@ -47,6 +42,7 @@
         optionLabel="name"
         optionValue="id"
         placeholder="选择套件"
+        @change="(e) => selectGroup(e.value)"
       ></Dropdown>
       <div v-if="mode === Mode.VIDEO" ref="setupVideoRefs">
         <div v-for="video in setupVideoList" :key="video.id">
@@ -75,6 +71,13 @@
           </Panel>
         </div>
       </div>
+      <Button
+        v-show="addVideoVisible"
+        class="w-full mt-2"
+        icon="pi pi-plus"
+        size="small"
+        @click="addVideo"
+      />
     </template>
   </Sidebar>
   <Dialog
@@ -136,6 +139,8 @@ const {
   groupList,
   mode,
   selectedGroup,
+  addVideoVisible,
+  selectGroup,
 } = await useIndex();
 </script>
 
