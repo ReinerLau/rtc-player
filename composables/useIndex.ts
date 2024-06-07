@@ -167,7 +167,6 @@ export const useIndex = async () => {
     formTitle,
     deleteVideo,
     setupVideoRefs,
-    pullStream,
     play,
     videoRefs,
     colCount,

@@ -101,7 +101,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "vue";
 import { useIndex } from "~/composables/useIndex";
 
 const {
@@ -118,7 +117,6 @@ const {
   deleteVideo,
   setupVideoRefs,
   videoRefs,
-  pullStream,
   total,
   colCount,
   controlButtons,
@@ -126,10 +124,6 @@ const {
   onContextMenu,
   videoIndex,
 } = await useIndex();
-
-onMounted(() => {
-  pullStream();
-});
 </script>
 
 <style>
