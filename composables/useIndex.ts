@@ -22,6 +22,7 @@ export const useIndex = async () => {
     formTitle,
     deleteVideo,
     setupVideoRefs,
+    groupList,
   } = useSetup();
 
   const videoList = ref<Video[]>([]);
@@ -177,5 +178,6 @@ export const useIndex = async () => {
     videoIndex,
     increVideoCount,
     decreVideoCount,
+    groupList,
   };
 };

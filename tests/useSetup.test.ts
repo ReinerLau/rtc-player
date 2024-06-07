@@ -6,6 +6,7 @@ describe("配置", () => {
   const postVideo = vi.hoisted(() => vi.fn());
   const deleteVideoAPI = vi.hoisted(() => vi.fn());
   const sortVideoAPI = vi.hoisted(() => vi.fn());
+  const fetchAllGroup = vi.hoisted(() => vi.fn());
 
   vi.mock("primevue/usetoast", () => ({
     useToast: vi.fn(() => ({
@@ -14,6 +15,9 @@ describe("配置", () => {
   }));
   vi.mock("sortablejs", () => ({
     default: vi.fn(),
+  }));
+  vi.mock("~/utils/api/group", () => ({
+    fetchAllGroup,
   }));
 
   beforeEach(() => {
@@ -27,6 +31,18 @@ describe("配置", () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+  });
+
+  describe("分组", () => {
+    it("显示弹窗后查询所有分组", async () => {
+      const groupData = [{ id: 1, name: "test" }];
+      fetchAllGroup.mockResolvedValue(groupData);
+      const { showSidebar, groupList } = useSetup();
+
+      await showSidebar();
+
+      expect(groupList.value).toEqual(groupData);
+    });
   });
 
   describe("视频列表", () => {

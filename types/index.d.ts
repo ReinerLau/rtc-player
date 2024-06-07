@@ -4,3 +4,9 @@ export interface Video {
   url: string;
   isPlaying?: boolean;
 }
+
+export interface Group {
+  id: number;
+  name: string;
+  description?: string;
+}

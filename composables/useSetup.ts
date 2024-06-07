@@ -1,6 +1,7 @@
 import Sortable, { type SortableEvent } from "sortablejs";
 import { ref } from "vue";
-import type { Video } from "~/types";
+import type { Group, Video } from "~/types";
+import { fetchAllGroup } from "~/utils/api/group";
 import {
   deleteVideoAPI,
   fetchAllVideo,
@@ -20,6 +21,7 @@ export const useSetup = () => {
     visible.value = true;
 
     await getVideo();
+    await getGroup();
 
     sortable = new Sortable(setupVideoRefs.value!, {
       animation: 150,
@@ -94,6 +96,13 @@ export const useSetup = () => {
 
   const formTitle = ref("添加视频");
 
+  const getGroup = async () => {
+    const data = await fetchAllGroup();
+    groupList.value = data;
+  };
+
+  const groupList = ref<Group[]>([]);
+
   return {
     visible,
     showSidebar,
@@ -109,5 +118,6 @@ export const useSetup = () => {
     setupVideoRefs,
     isSortable,
     updateOrder,
+    groupList,
   };
 };

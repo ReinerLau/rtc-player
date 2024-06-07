@@ -6,3 +6,9 @@ export const videos = sqliteTable("videos", {
   url: text("url").notNull(),
   order: integer("order", { mode: "number" }).notNull(),
 });
+
+export const groups = sqliteTable("groups", {
+  id: integer("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description"),
+});
