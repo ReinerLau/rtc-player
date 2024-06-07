@@ -65,14 +65,6 @@ describe("配置", () => {
 
       expect(addVideoVisible.value).toBe(true);
     });
-
-    it("点击新增显示表单弹窗", () => {
-      const { addGroup, groupFormVisible } = useSetup();
-
-      addGroup();
-
-      expect(groupFormVisible.value).toBe(true);
-    });
   });
 
   describe("视频列表", () => {

@@ -8,12 +8,15 @@ import {
   postVideo,
   sortVideoAPI,
 } from "~/utils/api/video";
+import { useGroup } from "./useGroup";
 export const enum Mode {
   GROUP,
   VIDEO,
 }
 
 export const useSetup = () => {
+  const { addGroup, groupFormVisible } = useGroup();
+
   const visible = ref(false);
 
   const videoList = ref<Video[]>([]);
@@ -117,12 +120,6 @@ export const useSetup = () => {
     if (value) {
       addVideoVisible.value = true;
     }
-  };
-
-  const groupFormVisible = ref(false);
-
-  const addGroup = () => {
-    groupFormVisible.value = true;
   };
 
   return {
