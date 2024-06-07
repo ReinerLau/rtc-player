@@ -148,7 +148,8 @@ describe("配置", () => {
     });
 
     it("点击保存提交视频信息", () => {
-      const { saveVideo, videoData } = useSetup();
+      const { saveVideo, videoData, selectedGroup } = useSetup();
+      selectedGroup.value = 1;
       videoData.value = {
         name: "test",
         url: "test",
@@ -159,6 +160,24 @@ describe("配置", () => {
       expect(postVideo).toHaveBeenCalledWith({
         name: videoData.value.name,
         url: videoData.value.url,
+        groupId: selectedGroup.value,
+      });
+    });
+
+    it("保存时带上所在分组信息", () => {
+      const { saveVideo, videoData, selectedGroup } = useSetup();
+      selectedGroup.value = 1;
+      videoData.value = {
+        name: "test",
+        url: "test",
+      };
+
+      saveVideo();
+
+      expect(postVideo).toHaveBeenCalledWith({
+        name: videoData.value.name,
+        url: videoData.value.url,
+        groupId: selectedGroup.value,
       });
     });
 

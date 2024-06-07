@@ -77,7 +77,10 @@ export const useSetup = () => {
     if (!videoData.value.name || !videoData.value.url) {
       return false;
     }
-    await postVideo(videoData.value);
+    await postVideo({
+      ...videoData.value,
+      groupId: selectedGroup.value!,
+    });
     videoFormVisible.value = false;
     clearVideo();
     const result = await getVideo();

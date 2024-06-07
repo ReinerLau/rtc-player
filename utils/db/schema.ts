@@ -5,6 +5,9 @@ export const videos = sqliteTable("videos", {
   name: text("name").notNull(),
   url: text("url").notNull(),
   order: integer("order", { mode: "number" }).notNull(),
+  groupId: integer("group_id")
+    .references(() => groups.id)
+    .notNull(),
 });
 
 export const groups = sqliteTable("groups", {

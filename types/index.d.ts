@@ -2,7 +2,7 @@ export interface Video {
   id?: number;
   name: string;
   url: string;
-  isPlaying?: boolean;
+  groupId?: number;
 }
 
 export interface Group {
