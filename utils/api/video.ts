@@ -33,3 +33,7 @@ export const sortVideoAPI = async (oldIndex: number, newIndex: number) => {
     },
   });
 };
+
+export const fetchVideoByGroup = async (groupId: number): Promise<Video[]> => {
+  return await $fetch(`/api/video/${groupId}`);
+};

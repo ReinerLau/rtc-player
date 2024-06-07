@@ -1,12 +1,13 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { nextTick } from "vue";
 import { useSetup } from "~/composables/useSetup";
 
 describe("配置", () => {
-  const fetchAllVideo = vi.hoisted(() => vi.fn());
   const postVideo = vi.hoisted(() => vi.fn());
   const deleteVideoAPI = vi.hoisted(() => vi.fn());
   const sortVideoAPI = vi.hoisted(() => vi.fn());
   const fetchAllGroup = vi.hoisted(() => vi.fn());
+  const fetchVideoByGroup = vi.hoisted(() => vi.fn());
 
   vi.mock("primevue/usetoast", () => ({
     useToast: vi.fn(() => ({
@@ -22,47 +23,46 @@ describe("配置", () => {
 
   beforeEach(() => {
     vi.mock("~/utils/api/video", () => ({
-      fetchAllVideo,
       postVideo,
       deleteVideoAPI,
       sortVideoAPI,
+      fetchVideoByGroup,
     }));
-  });
-
-  afterEach(() => {
-    vi.clearAllMocks();
   });
 
   describe("分组", () => {
     it("显示弹窗后查询所有分组", async () => {
-      const groupData = [{ id: 1, name: "test" }];
-      fetchAllGroup.mockResolvedValue(groupData);
-      const { showSidebar, groupList } = useSetup();
+      const { showSidebar } = useSetup();
 
       await showSidebar();
 
-      expect(groupList.value).toEqual(groupData);
+      expect(fetchAllGroup).toHaveBeenCalled();
+    });
+
+    it("选择分组后查询对应分组的视频列表", async () => {
+      const { selectedGroup } = useSetup();
+
+      selectedGroup.value = 1;
+
+      await nextTick();
+      expect(fetchVideoByGroup).toHaveBeenCalledWith(selectedGroup.value);
     });
   });
 
-  describe("视频列表", () => {
-    it("点击配置右侧显示弹窗", () => {
-      const { visible, showSidebar } = useSetup();
+  it("点击配置右侧显示弹窗", () => {
+    const { visible, showSidebar } = useSetup();
 
-      showSidebar();
+    showSidebar();
 
-      expect(visible.value).toBe(true);
-    });
+    expect(visible.value).toBe(true);
+  });
 
-    it("显示右侧弹窗后查找所有视频", async () => {
-      const mockedData = [{ id: 1, name: "test" }];
-      fetchAllVideo.mockResolvedValue(mockedData);
-      const { showSidebar, videoList } = useSetup();
+  it("已选择分组情况下显示右侧弹窗后查询对应分组的视频列表", async () => {
+    const { showSidebar } = useSetup();
 
-      await showSidebar();
+    await showSidebar();
 
-      expect(videoList.value).toEqual(mockedData);
-    });
+    expect(fetchVideoByGroup).toHaveBeenCalled();
   });
 
   describe("排序", () => {
@@ -76,11 +76,6 @@ describe("配置", () => {
     });
 
     it("拖拽后更新列表顺序", async () => {
-      const mockedData = [
-        { id: 1, name: "test", order: 1 },
-        { id: 2, name: "test1", order: 2 },
-      ];
-      fetchAllVideo.mockResolvedValue(mockedData);
       const { updateOrder } = useSetup();
 
       await updateOrder(0, 1);
@@ -182,9 +177,7 @@ describe("配置", () => {
     });
 
     it("点击保存后重新查询视频列表", async () => {
-      const mockedData = [{ id: 1, name: "test" }];
-      fetchAllVideo.mockResolvedValue(mockedData);
-      const { saveVideo, videoData, videoList } = useSetup();
+      const { saveVideo, videoData } = useSetup();
       videoData.value = {
         name: "test",
         url: "test",
@@ -192,20 +185,7 @@ describe("配置", () => {
 
       await saveVideo();
 
-      expect(videoList.value).toEqual(mockedData);
-    });
-
-    it("保存后更新主页视频列表", async () => {
-      const mockedData = [{ id: 1, name: "test" }];
-      fetchAllVideo.mockResolvedValue(mockedData);
-      const { saveVideo, videoData } = useSetup();
-      videoData.value = {
-        name: "test",
-        url: "test",
-      };
-
-      const videoList = await saveVideo();
-      expect(videoList).toEqual(mockedData);
+      expect(fetchVideoByGroup).toHaveBeenCalled();
     });
 
     it("如果信息没补充完整则提示", async () => {
@@ -271,14 +251,12 @@ describe("配置", () => {
         expect(deleteVideoAPI).toHaveBeenCalledWith(id);
       });
 
-      it("删除后重新查询视频列表", async () => {
-        const mockedData = [{ id: 1, name: "test" }];
-        fetchAllVideo.mockResolvedValue(mockedData);
+      it("删除视频后重新查询视频列表", async () => {
         const { deleteVideo } = useSetup();
 
         await deleteVideo(1);
 
-        expect(deleteVideoAPI).toHaveBeenCalledWith(1);
+        expect(fetchVideoByGroup).toHaveBeenCalled();
       });
     });
   });

@@ -1,9 +1,9 @@
 import Sortable, { type SortableEvent } from "sortablejs";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import type { Video } from "~/types";
 import {
   deleteVideoAPI,
-  fetchAllVideo,
+  fetchVideoByGroup,
   postVideo,
   sortVideoAPI,
 } from "~/utils/api/video";
@@ -87,10 +87,17 @@ export const useSetup = () => {
     return result;
   };
 
+  watch(selectedGroup, (value) => {
+    if (value) {
+      getVideo();
+    }
+  });
+
   const getVideo = async () => {
-    const data = await fetchAllVideo();
-    videoList.value = data;
-    return data;
+    if (selectedGroup.value) {
+      const data = await fetchVideoByGroup(selectedGroup.value);
+      videoList.value = data;
+    }
   };
 
   const deleteVideo = async (id: number) => {
