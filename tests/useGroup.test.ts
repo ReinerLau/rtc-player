@@ -3,7 +3,9 @@ import { useGroup } from "~/composables/useGroup";
 
 describe("分组", () => {
   const postGroup = vi.hoisted(() => vi.fn());
+  const fetchAllGroup = vi.hoisted(() => vi.fn());
   vi.mock("~/utils/api/group", () => ({
+    fetchAllGroup,
     postGroup,
   }));
 
@@ -64,5 +66,15 @@ describe("分组", () => {
     cancelGroup();
 
     expect(groupData.value).toEqual({ name: "" });
+  });
+
+  it("保存后重新查询分组列表", async () => {
+    const mockedData = [{ id: 1, name: "test" }];
+    fetchAllGroup.mockResolvedValue(mockedData);
+    const { groupList, saveGroup } = useGroup();
+
+    await saveGroup();
+
+    expect(groupList.value).toEqual(mockedData);
   });
 });

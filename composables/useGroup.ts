@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import type { Group } from "~/types";
-import { postGroup } from "~/utils/api/group";
+import { fetchAllGroup, postGroup } from "~/utils/api/group";
 
 export const useGroup = () => {
   const groupFormVisible = ref(false);
@@ -17,6 +17,7 @@ export const useGroup = () => {
     await postGroup(groupData.value);
     groupFormVisible.value = false;
     clearGroup();
+    await getGroup();
   };
 
   const clearGroup = () => {
@@ -30,11 +31,20 @@ export const useGroup = () => {
     clearGroup();
   };
 
+  const groupList = ref<Group[]>([]);
+
+  const getGroup = async () => {
+    const data = await fetchAllGroup();
+    groupList.value = data;
+  };
+
   return {
     addGroup,
     groupFormVisible,
     saveGroup,
     groupData,
     cancelGroup,
+    groupList,
+    getGroup,
   };
 };

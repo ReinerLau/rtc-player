@@ -1,7 +1,6 @@
 import Sortable, { type SortableEvent } from "sortablejs";
 import { ref } from "vue";
-import type { Group, Video } from "~/types";
-import { fetchAllGroup } from "~/utils/api/group";
+import type { Video } from "~/types";
 import {
   deleteVideoAPI,
   fetchAllVideo,
@@ -15,8 +14,15 @@ export const enum Mode {
 }
 
 export const useSetup = () => {
-  const { addGroup, groupFormVisible, saveGroup, groupData, cancelGroup } =
-    useGroup();
+  const {
+    addGroup,
+    groupFormVisible,
+    saveGroup,
+    groupData,
+    cancelGroup,
+    groupList,
+    getGroup,
+  } = useGroup();
 
   const visible = ref(false);
 
@@ -103,13 +109,6 @@ export const useSetup = () => {
   };
 
   const formTitle = ref("添加视频");
-
-  const getGroup = async () => {
-    const data = await fetchAllGroup();
-    groupList.value = data;
-  };
-
-  const groupList = ref<Group[]>([]);
 
   const mode = ref<Mode>(Mode.GROUP);
 
