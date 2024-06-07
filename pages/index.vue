@@ -83,7 +83,7 @@
       />
     </template>
   </Sidebar>
-  <Dialog v-model:visible="groupFormVisible" modal header="分组"> </Dialog>
+  <GroupFormDialog v-model:visible="groupFormVisible" />
   <Dialog
     v-model:visible="videoFormVisible"
     modal
