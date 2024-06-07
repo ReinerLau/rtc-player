@@ -45,7 +45,21 @@
           placeholder="选择套件"
           @change="(e) => selectGroup(e.value)"
         ></Dropdown>
-        <Button icon="pi pi-plus" @click="addGroup" />
+        <Button text rounded size="small" icon="pi pi-plus" @click="addGroup" />
+        <Button
+          v-show="groupRelevantButtonVisible"
+          text
+          rounded
+          size="small"
+          icon="pi pi-cog"
+        />
+        <Button
+          v-show="groupRelevantButtonVisible"
+          text
+          rounded
+          size="small"
+          icon="pi pi-trash"
+        />
       </div>
       <div ref="setupVideoRefs">
         <div v-for="video in setupVideoList" :key="video.id">
@@ -75,7 +89,7 @@
         </div>
       </div>
       <Button
-        v-show="addVideoVisible"
+        v-show="groupRelevantButtonVisible"
         class="w-full mt-2"
         icon="pi pi-plus"
         size="small"
@@ -146,7 +160,7 @@ const {
   videoIndex,
   groupList,
   selectedGroup,
-  addVideoVisible,
+  groupRelevantButtonVisible,
   selectGroup,
   groupFormVisible,
   addGroup,

@@ -77,4 +77,18 @@ describe("分组", () => {
 
     expect(groupList.value).toEqual(mockedData);
   });
+
+  it("没选择分组前不显示相关按钮", () => {
+    const { groupRelevantButtonVisible } = useGroup();
+
+    expect(groupRelevantButtonVisible.value).toBe(false);
+  });
+
+  it("选择分组后显示添加视频按钮", () => {
+    const { selectGroup, groupRelevantButtonVisible } = useGroup();
+
+    selectGroup(1);
+
+    expect(groupRelevantButtonVisible.value).toBe(true);
+  });
 });

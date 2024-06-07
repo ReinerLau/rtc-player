@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { Mode, useSetup } from "~/composables/useSetup";
+import { useSetup } from "~/composables/useSetup";
 
 describe("配置", () => {
   const fetchAllVideo = vi.hoisted(() => vi.fn());
@@ -33,14 +33,6 @@ describe("配置", () => {
     vi.clearAllMocks();
   });
 
-  describe("模式", () => {
-    it("默认模式为分组模式", () => {
-      const { mode } = useSetup();
-
-      expect(mode.value).toBe(Mode.GROUP);
-    });
-  });
-
   describe("分组", () => {
     it("显示弹窗后查询所有分组", async () => {
       const groupData = [{ id: 1, name: "test" }];
@@ -50,20 +42,6 @@ describe("配置", () => {
       await showSidebar();
 
       expect(groupList.value).toEqual(groupData);
-    });
-
-    it("没选择分组前不显示添加视频按钮", () => {
-      const { addVideoVisible } = useSetup();
-
-      expect(addVideoVisible.value).toBe(false);
-    });
-
-    it("选择分组后显示添加视频按钮", () => {
-      const { selectGroup, addVideoVisible } = useSetup();
-
-      selectGroup(1);
-
-      expect(addVideoVisible.value).toBe(true);
     });
   });
 

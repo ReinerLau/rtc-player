@@ -23,6 +23,8 @@ export const useSetup = () => {
     groupList,
     getGroup,
     selectedGroup,
+    selectGroup,
+    groupRelevantButtonVisible,
   } = useGroup();
 
   const visible = ref(false);
@@ -111,14 +113,6 @@ export const useSetup = () => {
 
   const formTitle = ref("添加视频");
 
-  const addVideoVisible = ref(false);
-
-  const selectGroup = (value: number) => {
-    if (value) {
-      addVideoVisible.value = true;
-    }
-  };
-
   return {
     visible,
     showSidebar,
@@ -136,7 +130,7 @@ export const useSetup = () => {
     updateOrder,
     groupList,
     selectedGroup,
-    addVideoVisible,
+    groupRelevantButtonVisible,
     selectGroup,
     groupFormVisible,
     addGroup,

@@ -40,6 +40,14 @@ export const useGroup = () => {
 
   const selectedGroup = ref<number>();
 
+  const groupRelevantButtonVisible = ref(false);
+
+  const selectGroup = (value: number) => {
+    if (value) {
+      groupRelevantButtonVisible.value = true;
+    }
+  };
+
   return {
     addGroup,
     groupFormVisible,
@@ -49,5 +57,7 @@ export const useGroup = () => {
     groupList,
     getGroup,
     selectedGroup,
+    groupRelevantButtonVisible,
+    selectGroup,
   };
 };
