@@ -119,6 +119,12 @@ export const useSetup = () => {
     }
   };
 
+  const groupFormVisible = ref(false);
+
+  const addGroup = () => {
+    groupFormVisible.value = true;
+  };
+
   return {
     visible,
     showSidebar,
@@ -139,5 +145,7 @@ export const useSetup = () => {
     selectedGroup,
     addVideoVisible,
     selectGroup,
+    groupFormVisible,
+    addGroup,
   };
 };

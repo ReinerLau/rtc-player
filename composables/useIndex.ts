@@ -27,6 +27,8 @@ export const useIndex = async () => {
     selectedGroup,
     addVideoVisible,
     selectGroup,
+    groupFormVisible,
+    addGroup,
   } = useSetup();
 
   const videoList = ref<Video[]>([]);
@@ -187,5 +189,7 @@ export const useIndex = async () => {
     selectedGroup,
     addVideoVisible,
     selectGroup,
+    groupFormVisible,
+    addGroup,
   };
 };

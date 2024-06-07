@@ -34,16 +34,19 @@
   </div>
   <Sidebar v-model:visible="visible" position="right" header="配置">
     <template #default>
-      <Dropdown
-        filter
-        class="w-full"
-        v-model="selectedGroup"
-        :options="groupList"
-        optionLabel="name"
-        optionValue="id"
-        placeholder="选择套件"
-        @change="(e) => selectGroup(e.value)"
-      ></Dropdown>
+      <div class="flex items-center">
+        <Dropdown
+          filter
+          class="flex-1 mr-2"
+          v-model="selectedGroup"
+          :options="groupList"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="选择套件"
+          @change="(e) => selectGroup(e.value)"
+        ></Dropdown>
+        <Button icon="pi pi-plus" size="small" @click="addGroup" />
+      </div>
       <div v-if="mode === Mode.VIDEO" ref="setupVideoRefs">
         <div v-for="video in setupVideoList" :key="video.id">
           <Panel class="mb-2 cursor-pointer" :header="video.name">
@@ -80,6 +83,7 @@
       />
     </template>
   </Sidebar>
+  <Dialog v-model:visible="groupFormVisible" modal header="分组"> </Dialog>
   <Dialog
     v-model:visible="videoFormVisible"
     modal
@@ -141,6 +145,8 @@ const {
   selectedGroup,
   addVideoVisible,
   selectGroup,
+  groupFormVisible,
+  addGroup,
 } = await useIndex();
 </script>
 
