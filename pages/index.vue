@@ -40,6 +40,7 @@
     </template>
     <template #default>
       <Dropdown
+        filter
         class="w-full"
         v-model="selectedGroup"
         :options="groupList"
