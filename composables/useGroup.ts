@@ -54,9 +54,9 @@ export const useGroup = () => {
   const editGroup = () => {
     groupFormVisible.value = true;
     groupFormTitle.value = "编辑分组";
-    groupData.value = groupList.value.find(
-      (item) => item.id === selectedGroup.value
-    )!;
+    groupData.value = {
+      ...groupList.value.find((item) => item.id === selectedGroup.value)!,
+    };
   };
 
   return {

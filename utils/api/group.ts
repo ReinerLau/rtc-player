@@ -5,8 +5,15 @@ export const fetchAllGroup = async () => {
 };
 
 export const postGroup = async (body: Group) => {
-  await $fetch("/api/group", {
-    method: "post",
-    body,
-  });
+  if (body.id) {
+    await $fetch("/api/group", {
+      method: "put",
+      body,
+    });
+  } else {
+    await $fetch("/api/group", {
+      method: "post",
+      body,
+    });
+  }
 };
