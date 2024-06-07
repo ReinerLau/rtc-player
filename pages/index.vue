@@ -41,7 +41,7 @@
     <template #default>
       <div ref="setupVideoRefs">
         <div v-for="video in setupVideoList" :key="video.id">
-          <Panel class="mb-2" :header="video.name">
+          <Panel class="mb-2 cursor-pointer" :header="video.name">
             <template #icons>
               <Button
                 icon="pi pi-cog"
