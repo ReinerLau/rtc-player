@@ -39,8 +39,8 @@ export const useSetup = () => {
   const showSidebar = async () => {
     visible.value = true;
 
-    await getVideo();
-    await getGroup();
+    getVideo();
+    getGroup();
 
     sortable = new Sortable(setupVideoRefs.value!, {
       animation: 150,
@@ -87,17 +87,19 @@ export const useSetup = () => {
     return result;
   };
 
-  watch(selectedGroup, (value) => {
+  const onSelectedGroup = (value: number | null) => {
     if (value) {
       getVideo();
+    } else {
+      videoList.value.length = 0;
     }
-  });
+  };
+
+  watch(selectedGroup, onSelectedGroup);
 
   const getVideo = async () => {
-    if (selectedGroup.value) {
-      const data = await fetchVideoByGroup(selectedGroup.value);
-      videoList.value = data;
-    }
+    const data = await fetchVideoByGroup(selectedGroup.value!);
+    videoList.value = data;
   };
 
   const deleteVideo = async (id: number) => {
@@ -151,5 +153,6 @@ export const useSetup = () => {
     groupFormTitle,
     editGroup,
     deleteGroup,
+    onSelectedGroup,
   };
 };

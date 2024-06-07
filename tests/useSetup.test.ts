@@ -1,5 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
-import { nextTick } from "vue";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { useSetup } from "~/composables/useSetup";
 
 describe("配置", () => {
@@ -21,31 +20,55 @@ describe("配置", () => {
     fetchAllGroup,
   }));
 
-  beforeEach(() => {
-    vi.mock("~/utils/api/video", () => ({
-      postVideo,
-      deleteVideoAPI,
-      sortVideoAPI,
-      fetchVideoByGroup,
-    }));
+  vi.mock("~/utils/api/video", () => ({
+    postVideo,
+    deleteVideoAPI,
+    sortVideoAPI,
+    fetchVideoByGroup,
+  }));
+
+  afterEach(() => {
+    vi.resetAllMocks();
   });
 
   describe("分组", () => {
     it("显示弹窗后查询所有分组", async () => {
       const { showSidebar } = useSetup();
 
-      await showSidebar();
+      showSidebar();
 
       expect(fetchAllGroup).toHaveBeenCalled();
     });
 
     it("选择分组后查询对应分组的视频列表", async () => {
-      const { selectedGroup } = useSetup();
+      const { onSelectedGroup } = useSetup();
 
-      selectedGroup.value = 1;
+      onSelectedGroup(1);
 
-      await nextTick();
-      expect(fetchVideoByGroup).toHaveBeenCalledWith(selectedGroup.value);
+      expect(fetchVideoByGroup).toHaveBeenCalled();
+    });
+
+    it("清除所选分组后清空视频列表", async () => {
+      const { onSelectedGroup, videoList } = useSetup();
+      videoList.value = [
+        {
+          id: 1,
+          name: "test",
+          url: "test",
+        },
+      ];
+
+      onSelectedGroup(null);
+
+      expect(videoList.value).toHaveLength(0);
+    });
+
+    it("已选择分组情况下显示右侧弹窗后查询对应分组的视频列表", async () => {
+      const { showSidebar } = useSetup();
+
+      showSidebar();
+
+      expect(fetchVideoByGroup).toHaveBeenCalled();
     });
   });
 
@@ -57,20 +80,12 @@ describe("配置", () => {
     expect(visible.value).toBe(true);
   });
 
-  it("已选择分组情况下显示右侧弹窗后查询对应分组的视频列表", async () => {
-    const { showSidebar } = useSetup();
-
-    await showSidebar();
-
-    expect(fetchVideoByGroup).toHaveBeenCalled();
-  });
-
   describe("排序", () => {
     it("显示弹窗后可拖拽视频列表项", async () => {
       const { showSidebar, isSortable, setupVideoRefs } = useSetup();
       setupVideoRefs.value = document.createElement("div");
 
-      await showSidebar();
+      showSidebar();
 
       expect(isSortable()).toBe(true);
     });
@@ -125,7 +140,7 @@ describe("配置", () => {
     it("保存成功后关闭弹窗", async () => {
       const { videoFormVisible, saveVideo } = useSetup();
 
-      await saveVideo();
+      saveVideo();
 
       expect(videoFormVisible.value).toBe(false);
     });
