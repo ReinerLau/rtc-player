@@ -8,6 +8,10 @@ import {
   postVideo,
   sortVideoAPI,
 } from "~/utils/api/video";
+export const enum Mode {
+  GROUP,
+  VIDEO,
+}
 
 export const useSetup = () => {
   const visible = ref(false);
@@ -103,6 +107,8 @@ export const useSetup = () => {
 
   const groupList = ref<Group[]>([]);
 
+  const mode = ref<Mode>(Mode.GROUP);
+
   return {
     visible,
     showSidebar,
@@ -119,5 +125,6 @@ export const useSetup = () => {
     isSortable,
     updateOrder,
     groupList,
+    mode,
   };
 };

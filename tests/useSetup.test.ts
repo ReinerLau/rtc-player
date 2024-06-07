@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { useSetup } from "~/composables/useSetup";
+import { Mode, useSetup } from "~/composables/useSetup";
 
 describe("配置", () => {
   const fetchAllVideo = vi.hoisted(() => vi.fn());
@@ -31,6 +31,14 @@ describe("配置", () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+  });
+
+  describe("模式", () => {
+    it("默认模式为分组模式", () => {
+      const { mode } = useSetup();
+
+      expect(mode.value).toBe(Mode.GROUP);
+    });
   });
 
   describe("分组", () => {

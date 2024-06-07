@@ -39,7 +39,11 @@
       </div>
     </template>
     <template #default>
-      <div v-for="group in groupList" :key="group.id">
+      <div
+        v-if="mode === Mode.GROUP"
+        v-for="group in groupList"
+        :key="group.id"
+      >
         <Panel toggleable class="mb-2" :header="group.name">
           <template #default>
             <div class="text-ellipsis overflow-hidden">
@@ -48,7 +52,7 @@
           </template>
         </Panel>
       </div>
-      <!-- <div ref="setupVideoRefs">
+      <div v-if="mode === Mode.VIDEO" ref="setupVideoRefs">
         <div v-for="video in setupVideoList" :key="video.id">
           <Panel class="mb-2 cursor-pointer" :header="video.name">
             <template #icons>
@@ -74,7 +78,7 @@
             </template>
           </Panel>
         </div>
-      </div> -->
+      </div>
     </template>
   </Sidebar>
   <Dialog
@@ -111,6 +115,7 @@
 
 <script lang="ts" setup>
 import { useIndex } from "~/composables/useIndex";
+import { Mode } from "~/composables/useSetup";
 
 const {
   videoList,
@@ -133,6 +138,7 @@ const {
   onContextMenu,
   videoIndex,
   groupList,
+  mode,
 } = await useIndex();
 </script>
 
