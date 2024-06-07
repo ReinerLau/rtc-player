@@ -45,7 +45,7 @@
           placeholder="选择套件"
           @change="(e) => selectGroup(e.value)"
         ></Dropdown>
-        <Button icon="pi pi-plus" size="small" @click="addGroup" />
+        <Button icon="pi pi-plus" @click="addGroup" />
       </div>
       <div ref="setupVideoRefs">
         <div v-for="video in setupVideoList" :key="video.id">
