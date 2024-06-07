@@ -1,5 +1,5 @@
 <template>
-  <Dialog v-model:visible="visible" modal header="分组">
+  <Dialog v-model:visible="visible" modal :header="formTitle">
     <template #default>
       <div class="flex items-center gap-3 mb-2">
         <span>名称</span>
@@ -20,6 +20,10 @@ const visible = defineModel<boolean>("visible", { required: true });
 const data = defineModel<Group>("data", { required: true });
 
 const emit = defineEmits(["save", "cancel"]);
+
+defineProps<{
+  formTitle: string;
+}>();
 
 const save = () => {
   emit("save");

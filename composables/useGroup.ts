@@ -7,6 +7,7 @@ export const useGroup = () => {
 
   const addGroup = () => {
     groupFormVisible.value = true;
+    groupFormTitle.value = "新增分组";
   };
 
   const groupData = ref<Group>({
@@ -48,6 +49,13 @@ export const useGroup = () => {
     }
   };
 
+  const groupFormTitle = ref("新增分组");
+
+  const editGroup = () => {
+    groupFormVisible.value = true;
+    groupFormTitle.value = "编辑分组";
+  };
+
   return {
     addGroup,
     groupFormVisible,
@@ -59,5 +67,7 @@ export const useGroup = () => {
     selectedGroup,
     groupRelevantButtonVisible,
     selectGroup,
+    editGroup,
+    groupFormTitle,
   };
 };

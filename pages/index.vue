@@ -52,6 +52,7 @@
           rounded
           size="small"
           icon="pi pi-cog"
+          @click="editGroup"
         />
         <Button
           v-show="groupRelevantButtonVisible"
@@ -102,6 +103,7 @@
     v-model:data="groupData"
     @save="saveGroup"
     @cancel="cancelGroup"
+    :form-title="groupFormTitle"
   />
   <Dialog
     v-model:visible="videoFormVisible"
@@ -167,6 +169,8 @@ const {
   saveGroup,
   groupData,
   cancelGroup,
+  groupFormTitle,
+  editGroup,
 } = await useIndex();
 </script>
 

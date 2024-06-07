@@ -9,12 +9,23 @@ describe("分组", () => {
     postGroup,
   }));
 
-  it("点击新增显示表单弹窗", () => {
-    const { addGroup, groupFormVisible } = useGroup();
+  describe("新增", () => {
+    it("点击新增显示表单弹窗", () => {
+      const { addGroup, groupFormVisible } = useGroup();
 
-    addGroup();
+      addGroup();
 
-    expect(groupFormVisible.value).toBe(true);
+      expect(groupFormVisible.value).toBe(true);
+    });
+
+    it("点击新增弹窗标题显示新增分组", () => {
+      const { addGroup, groupFormTitle, editGroup } = useGroup();
+
+      editGroup();
+      addGroup();
+
+      expect(groupFormTitle.value).toBe("新增分组");
+    });
   });
 
   it("点击保存提交分组信息", () => {
@@ -90,5 +101,22 @@ describe("分组", () => {
     selectGroup(1);
 
     expect(groupRelevantButtonVisible.value).toBe(true);
+  });
+
+  describe("编辑", () => {
+    it("点击编辑显示表单弹窗", () => {
+      const { editGroup, groupFormVisible } = useGroup();
+
+      editGroup();
+
+      expect(groupFormVisible.value).toBe(true);
+    });
+    it("点击编辑后弹窗标题显示编辑分组", () => {
+      const { groupFormTitle, editGroup } = useGroup();
+
+      editGroup();
+
+      expect(groupFormTitle.value).toBe("编辑分组");
+    });
   });
 });

@@ -31,6 +31,8 @@ export const useIndex = async () => {
     saveGroup,
     groupData,
     cancelGroup,
+    groupFormTitle,
+    editGroup,
   } = useSetup();
 
   const videoList = ref<Video[]>([]);
@@ -195,5 +197,7 @@ export const useIndex = async () => {
     saveGroup,
     groupData,
     cancelGroup,
+    groupFormTitle,
+    editGroup,
   };
 };
