@@ -109,6 +109,8 @@ export const useSetup = () => {
 
   const mode = ref<Mode>(Mode.GROUP);
 
+  const selectedGroup = ref<number>();
+
   return {
     visible,
     showSidebar,
@@ -126,5 +128,6 @@ export const useSetup = () => {
     updateOrder,
     groupList,
     mode,
+    selectedGroup,
   };
 };

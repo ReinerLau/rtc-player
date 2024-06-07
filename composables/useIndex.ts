@@ -24,6 +24,7 @@ export const useIndex = async () => {
     setupVideoRefs,
     groupList,
     mode,
+    selectedGroup,
   } = useSetup();
 
   const videoList = ref<Video[]>([]);
@@ -181,5 +182,6 @@ export const useIndex = async () => {
     decreVideoCount,
     groupList,
     mode,
+    selectedGroup,
   };
 };

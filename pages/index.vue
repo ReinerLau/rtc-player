@@ -39,19 +39,14 @@
       </div>
     </template>
     <template #default>
-      <div
-        v-if="mode === Mode.GROUP"
-        v-for="group in groupList"
-        :key="group.id"
-      >
-        <Panel toggleable class="mb-2" :header="group.name">
-          <template #default>
-            <div class="text-ellipsis overflow-hidden">
-              {{ group.description }}
-            </div>
-          </template>
-        </Panel>
-      </div>
+      <Dropdown
+        class="w-full"
+        v-model="selectedGroup"
+        :options="groupList"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="选择套件"
+      ></Dropdown>
       <div v-if="mode === Mode.VIDEO" ref="setupVideoRefs">
         <div v-for="video in setupVideoList" :key="video.id">
           <Panel class="mb-2 cursor-pointer" :header="video.name">
@@ -139,6 +134,7 @@ const {
   videoIndex,
   groupList,
   mode,
+  selectedGroup,
 } = await useIndex();
 </script>
 

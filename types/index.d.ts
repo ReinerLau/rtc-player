@@ -8,5 +8,4 @@ export interface Video {
 export interface Group {
   id: number;
   name: string;
-  description?: string;
 }

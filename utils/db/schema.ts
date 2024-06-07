@@ -10,5 +10,4 @@ export const videos = sqliteTable("videos", {
 export const groups = sqliteTable("groups", {
   id: integer("id").primaryKey(),
   name: text("name").notNull(),
-  description: text("description"),
 });
