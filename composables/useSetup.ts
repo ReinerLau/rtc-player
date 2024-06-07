@@ -22,6 +22,7 @@ export const useSetup = () => {
     cancelGroup,
     groupList,
     getGroup,
+    selectedGroup,
   } = useGroup();
 
   const visible = ref(false);
@@ -111,8 +112,6 @@ export const useSetup = () => {
   const formTitle = ref("添加视频");
 
   const mode = ref<Mode>(Mode.GROUP);
-
-  const selectedGroup = ref<number>();
 
   const addVideoVisible = ref(false);
 

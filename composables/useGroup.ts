@@ -38,6 +38,8 @@ export const useGroup = () => {
     groupList.value = data;
   };
 
+  const selectedGroup = ref<number>();
+
   return {
     addGroup,
     groupFormVisible,
@@ -46,5 +48,6 @@ export const useGroup = () => {
     cancelGroup,
     groupList,
     getGroup,
+    selectedGroup,
   };
 };
