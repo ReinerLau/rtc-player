@@ -34,7 +34,7 @@
   </div>
   <Sidebar v-model:visible="visible" position="right" header="配置">
     <template #default>
-      <div class="flex items-center">
+      <div class="flex items-center mb-2">
         <Dropdown
           filter
           class="flex-1 mr-2"
@@ -91,7 +91,7 @@
       </div>
       <Button
         v-show="groupRelevantButtonVisible"
-        class="w-full mt-2"
+        class="w-full"
         icon="pi pi-plus"
         size="small"
         @click="addVideo"
