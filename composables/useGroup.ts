@@ -1,6 +1,6 @@
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import type { Group } from "~/types";
-import { fetchAllGroup, postGroup } from "~/utils/api/group";
+import { deleteGroupAPI, fetchAllGroup, postGroup } from "~/utils/api/group";
 
 export const useGroup = () => {
   const groupFormVisible = ref(false);
@@ -39,15 +39,17 @@ export const useGroup = () => {
     groupList.value = data;
   };
 
-  const selectedGroup = ref<number>();
+  const selectedGroup = ref<number | null>(null);
 
   const groupRelevantButtonVisible = ref(false);
 
-  const selectGroup = (value: number) => {
+  watch(selectedGroup, (value) => {
     if (value) {
       groupRelevantButtonVisible.value = true;
+    } else {
+      groupRelevantButtonVisible.value = false;
     }
-  };
+  });
 
   const groupFormTitle = ref("新增分组");
 
@@ -57,6 +59,12 @@ export const useGroup = () => {
     groupData.value = {
       ...groupList.value.find((item) => item.id === selectedGroup.value)!,
     };
+  };
+
+  const deleteGroup = async () => {
+    await deleteGroupAPI(selectedGroup.value!);
+    selectedGroup.value = null;
+    await getGroup();
   };
 
   return {
@@ -69,8 +77,8 @@ export const useGroup = () => {
     getGroup,
     selectedGroup,
     groupRelevantButtonVisible,
-    selectGroup,
     editGroup,
     groupFormTitle,
+    deleteGroup,
   };
 };

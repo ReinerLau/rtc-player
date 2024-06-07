@@ -43,7 +43,6 @@
           optionLabel="name"
           optionValue="id"
           placeholder="选择套件"
-          @change="(e) => selectGroup(e.value)"
         ></Dropdown>
         <Button text rounded size="small" icon="pi pi-plus" @click="addGroup" />
         <Button
@@ -60,6 +59,7 @@
           rounded
           size="small"
           icon="pi pi-trash"
+          @click="deleteGroup"
         />
       </div>
       <div ref="setupVideoRefs">
@@ -163,7 +163,6 @@ const {
   groupList,
   selectedGroup,
   groupRelevantButtonVisible,
-  selectGroup,
   groupFormVisible,
   addGroup,
   saveGroup,
@@ -171,6 +170,7 @@ const {
   cancelGroup,
   groupFormTitle,
   editGroup,
+  deleteGroup,
 } = await useIndex();
 </script>
 

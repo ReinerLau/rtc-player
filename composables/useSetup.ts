@@ -23,10 +23,10 @@ export const useSetup = () => {
     groupList,
     getGroup,
     selectedGroup,
-    selectGroup,
     groupRelevantButtonVisible,
     groupFormTitle,
     editGroup,
+    deleteGroup,
   } = useGroup();
 
   const visible = ref(false);
@@ -133,7 +133,6 @@ export const useSetup = () => {
     groupList,
     selectedGroup,
     groupRelevantButtonVisible,
-    selectGroup,
     groupFormVisible,
     addGroup,
     saveGroup,
@@ -141,5 +140,6 @@ export const useSetup = () => {
     cancelGroup,
     groupFormTitle,
     editGroup,
+    deleteGroup,
   };
 };

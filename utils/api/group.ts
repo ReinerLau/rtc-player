@@ -17,3 +17,9 @@ export const postGroup = async (body: Group) => {
     });
   }
 };
+
+export const deleteGroupAPI = async (id: number) => {
+  await $fetch(`/api/group/${id}`, {
+    method: "delete",
+  });
+};

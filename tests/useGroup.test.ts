@@ -1,12 +1,15 @@
 import { describe, expect, it, vi } from "vitest";
+import { nextTick } from "vue";
 import { useGroup } from "~/composables/useGroup";
 
 describe("分组", () => {
   const postGroup = vi.hoisted(() => vi.fn());
   const fetchAllGroup = vi.hoisted(() => vi.fn());
+  const deleteGroupAPI = vi.hoisted(() => vi.fn());
   vi.mock("~/utils/api/group", () => ({
     fetchAllGroup,
     postGroup,
+    deleteGroupAPI,
   }));
 
   describe("新增", () => {
@@ -89,16 +92,22 @@ describe("分组", () => {
     expect(groupList.value).toEqual(mockedData);
   });
 
-  it("没选择分组前不显示相关按钮", () => {
-    const { groupRelevantButtonVisible } = useGroup();
+  it("没选择分组前不显示相关按钮", async () => {
+    const { groupRelevantButtonVisible, selectedGroup } = useGroup();
+
+    selectedGroup.value = 1;
+    await nextTick();
+    selectedGroup.value = null;
+    await nextTick();
 
     expect(groupRelevantButtonVisible.value).toBe(false);
   });
 
-  it("选择分组后显示添加视频按钮", () => {
-    const { selectGroup, groupRelevantButtonVisible } = useGroup();
+  it("选择分组后显示添加视频按钮", async () => {
+    const { selectedGroup, groupRelevantButtonVisible } = useGroup();
 
-    selectGroup(1);
+    selectedGroup.value = 1;
+    await nextTick();
 
     expect(groupRelevantButtonVisible.value).toBe(true);
   });
@@ -128,6 +137,27 @@ describe("分组", () => {
       editGroup();
 
       expect(groupData.value).toEqual(groupList.value[0]);
+    });
+  });
+
+  describe("删除", () => {
+    it("删除后查询分组信息", async () => {
+      const mockedData = [{ id: 1, name: "test" }];
+      fetchAllGroup.mockResolvedValue(mockedData);
+      const { deleteGroup, groupList } = useGroup();
+
+      await deleteGroup();
+
+      expect(groupList.value).toEqual(mockedData);
+    });
+
+    it("删除后清空选中分组", async () => {
+      const { deleteGroup, selectedGroup } = useGroup();
+      selectedGroup.value = 1;
+
+      await deleteGroup();
+
+      expect(selectedGroup.value).toBe(null);
     });
   });
 });
