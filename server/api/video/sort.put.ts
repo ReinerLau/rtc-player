@@ -1,19 +1,23 @@
 import { defineEventHandler, readBody } from "#imports";
-import { eq, inArray, sql, SQL } from "drizzle-orm";
+import { and, eq, inArray, sql, SQL } from "drizzle-orm";
 import { db } from "~/utils/db";
 import { videos } from "~/utils/db/schema";
 
 export default defineEventHandler(async (event) => {
-  const { oldIndex, newIndex } = await readBody(event);
+  const { oldIndex, newIndex, groupId } = await readBody(event);
 
   const tempOrder = newIndex > oldIndex ? newIndex + 0.5 : newIndex - 0.5;
 
   await db
     .update(videos)
     .set({ order: tempOrder })
-    .where(eq(videos.order, oldIndex));
+    .where(and(eq(videos.order, oldIndex), eq(videos.groupId, groupId)));
 
-  const videoList = await db.select().from(videos).orderBy(videos.order);
+  const videoList = await db
+    .select()
+    .from(videos)
+    .where(eq(videos.groupId, groupId))
+    .orderBy(videos.order);
 
   const sqlChunks: SQL[] = [];
   const ids = videoList.map((video) => video.id!);

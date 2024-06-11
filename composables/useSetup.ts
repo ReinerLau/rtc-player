@@ -1,5 +1,5 @@
 import Sortable, { type SortableEvent } from "sortablejs";
-import { ref, watch } from "vue";
+import { nextTick, ref, watch } from "vue";
 import type { Video } from "~/types";
 import {
   deleteVideoAPI,
@@ -42,6 +42,8 @@ export const useSetup = () => {
     getVideo();
     getGroup();
 
+    await nextTick();
+
     sortable = new Sortable(setupVideoRefs.value!, {
       animation: 150,
       onEnd: onSortEnd,
@@ -57,7 +59,7 @@ export const useSetup = () => {
   };
 
   const updateOrder = async (oldIndex: number, newIndex: number) => {
-    await sortVideoAPI(oldIndex, newIndex);
+    await sortVideoAPI(oldIndex, newIndex, selectedGroup.value!);
     await getVideo();
   };
 

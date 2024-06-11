@@ -85,7 +85,7 @@ describe("配置", () => {
       const { showSidebar, isSortable, setupVideoRefs } = useSetup();
       setupVideoRefs.value = document.createElement("div");
 
-      showSidebar();
+      await showSidebar();
 
       expect(isSortable()).toBe(true);
     });
