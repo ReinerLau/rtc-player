@@ -14,6 +14,9 @@ describe("主页", () => {
       })),
     };
   });
+  vi.mock("~/utils/api/video", () => ({
+    fetchVideoByGroup: vi.fn(() => Promise.resolve([])),
+  }));
 
   beforeAll(() => {
     vi.mock("primevue/usetoast", () => ({
@@ -81,6 +84,19 @@ describe("主页", () => {
 
       expect(total.value).toBe(4);
       expect(page.value).toBe(1);
+    });
+
+    it("选择分组后退出全屏", async () => {
+      const { selectedGroup, total, onContextMenu, fullScreen } =
+        await useIndex();
+
+      onContextMenu(2);
+      fullScreen();
+      selectedGroup.value = 1;
+
+      await nextTick();
+
+      expect(total.value).toBe(4);
     });
 
     it("全屏后重新拉流", async () => {

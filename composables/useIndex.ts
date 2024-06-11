@@ -134,6 +134,8 @@ export const useIndex = async () => {
     pullStream();
   };
 
+  watch(selectedGroup, exitFullScreen);
+
   const contextItems = computed(() => [
     {
       icon: "pi pi-refresh",
