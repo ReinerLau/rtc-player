@@ -1,9 +1,5 @@
 import type { Video } from "~/types";
 
-export const fetchAllVideo = async (): Promise<Video[]> => {
-  return await $fetch("/api/video");
-};
-
 export const postVideo = async (body: Video) => {
   if (body.id) {
     await $fetch("/api/video", {
@@ -35,5 +31,10 @@ export const sortVideoAPI = async (oldIndex: number, newIndex: number) => {
 };
 
 export const fetchVideoByGroup = async (groupId: number): Promise<Video[]> => {
-  return await $fetch(`/api/video/${groupId}`);
+  return await $fetch("/api/video", {
+    method: "get",
+    query: {
+      groupId,
+    },
+  });
 };
