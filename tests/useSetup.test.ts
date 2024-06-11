@@ -91,11 +91,12 @@ describe("配置", () => {
     });
 
     it("拖拽后更新列表顺序", async () => {
-      const { updateOrder } = useSetup();
+      const { updateOrder, selectedGroup } = useSetup();
 
+      selectedGroup.value = 1;
       await updateOrder(0, 1);
 
-      expect(sortVideoAPI).toHaveBeenCalledWith(0, 1);
+      expect(sortVideoAPI).toHaveBeenCalledWith(0, 1, 1);
     });
   });
 
