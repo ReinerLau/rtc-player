@@ -61,22 +61,36 @@ describe("主页", () => {
     expect(getCurVideoIndex()).toBe(6);
   });
 
-  it("全屏", async () => {
-    const { fullScreen, page, onContextMenu, total } = await useIndex();
+  describe("全屏", () => {
+    it("全屏", async () => {
+      const { fullScreen, page, onContextMenu, total } = await useIndex();
 
-    onContextMenu(6);
-    fullScreen();
+      onContextMenu(6);
+      fullScreen();
 
-    expect(getIndex(page.value, total.value, 0)).toBe(6);
-  });
+      expect(getIndex(page.value, total.value, 0)).toBe(6);
+    });
 
-  it("全屏后重新拉流", async () => {
-    const { fullScreen, onContextMenu, srsList } = await useIndex();
+    it("退出全屏", async () => {
+      const { exitFullScreen, fullScreen, page, onContextMenu, total } =
+        await useIndex();
 
-    onContextMenu(6);
-    fullScreen();
+      onContextMenu(6);
+      fullScreen();
+      exitFullScreen();
 
-    expect(srsList.value).toHaveLength(1);
+      expect(total.value).toBe(4);
+      expect(page.value).toBe(1);
+    });
+
+    it("全屏后重新拉流", async () => {
+      const { fullScreen, onContextMenu, srsList } = await useIndex();
+
+      onContextMenu(6);
+      fullScreen();
+
+      expect(srsList.value).toHaveLength(1);
+    });
   });
 
   it("当前视频总数为1，页码为2，新增视频总数后，页码为1", async () => {

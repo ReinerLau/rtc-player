@@ -128,18 +128,28 @@ export const useIndex = async () => {
     pullStream();
   };
 
-  const contextItems = [
+  const exitFullScreen = () => {
+    page.value = 1;
+    colCount.value = 2;
+    pullStream();
+  };
+
+  const contextItems = computed(() => [
     {
       icon: "pi pi-refresh",
       label: "重连",
       command: pullStream,
     },
     {
-      icon: "pi pi-expand",
-      label: "全屏",
-      command: fullScreen,
+      icon: `pi ${
+        total.value === 4
+          ? "pi-arrow-up-right-and-arrow-down-left-from-center"
+          : "pi-arrow-down-left-and-arrow-up-right-to-center"
+      }`,
+      label: total.value === 4 ? "全屏" : "退出全屏",
+      command: total.value === 4 ? fullScreen : exitFullScreen,
     },
-  ];
+  ]);
 
   const videoIndex = (index: number) => {
     return getIndex(page.value, total.value, index - 1);
@@ -184,5 +194,6 @@ export const useIndex = async () => {
     groupFormTitle,
     editGroup,
     deleteGroup,
+    exitFullScreen,
   };
 };
