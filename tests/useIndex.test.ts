@@ -40,7 +40,7 @@ describe("主页", () => {
     setupVideoList.value = mockedData;
 
     await nextTick();
-    expect(srsList.value).toHaveLength(1);
+    expect(srsList.value).toHaveLength(4);
   });
 
   it("获取视频顺序", async () => {
@@ -97,5 +97,11 @@ describe("主页", () => {
     decreVideoCount();
 
     expect(page.value).toBe(5);
+  });
+
+  it("默认显示4个视频", async () => {
+    const { total } = await useIndex();
+
+    expect(total.value).toBe(4);
   });
 });

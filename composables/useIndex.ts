@@ -38,7 +38,7 @@ export const useIndex = async () => {
   const videoList = ref<Video[]>([]);
 
   const { play, closeAll, videoRefs, srsList } = usePlay();
-  const { colCount, total, increCount, decreCount } = useLayout(1);
+  const { colCount, total, increCount, decreCount } = useLayout(2);
   const { page, forward, backward } = usePage();
 
   watch(setupVideoList, async () => {
