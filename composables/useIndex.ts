@@ -100,6 +100,7 @@ export const useIndex = async () => {
         forward();
         pullStream();
       },
+      disabled: total.value === 4 || page.value === 4,
     },
     {
       icon: "pi pi-chevron-left",
@@ -107,7 +108,7 @@ export const useIndex = async () => {
         backward();
         pullStream();
       },
-      disabled: page.value === 1,
+      disabled: total.value === 4 || page.value === 1,
     },
   ]);
 
