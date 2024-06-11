@@ -83,8 +83,8 @@ export const useSetup = () => {
     });
     videoFormVisible.value = false;
     clearVideo();
-    const result = await getVideo();
-    return result;
+    await getVideo();
+    return true;
   };
 
   const onSelectedGroup = (value: number | null) => {
