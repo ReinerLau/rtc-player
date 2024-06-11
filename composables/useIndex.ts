@@ -95,22 +95,6 @@ export const useIndex = async () => {
       command: showSidebar,
     },
     {
-      icon: "pi pi-plus",
-      command() {
-        increVideoCount();
-        pullStream();
-      },
-      disabled: total.value === 9,
-    },
-    {
-      icon: "pi pi-minus",
-      command() {
-        decreVideoCount();
-        pullStream();
-      },
-      disabled: total.value === 1,
-    },
-    {
       icon: "pi pi-chevron-right",
       command() {
         forward();
